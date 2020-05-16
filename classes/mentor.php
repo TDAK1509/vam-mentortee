@@ -1,12 +1,17 @@
 <?php
 class VamMentor {
-  function createTable() {
+  private $table_name;
+
+  function __construct() {
     global $wpdb;
-    
-    $table_name = $wpdb->prefix . MENTOR_TABLE;
+    $this->table_name = $wpdb->prefix . MENTOR_TABLE;
+  }
+  
+  public function createTable() {
+    global $wpdb;
     $charset_collate = $wpdb->get_charset_collate();
 
-    $sql = "CREATE TABLE $table_name (
+    $sql = "CREATE TABLE IF NOT EXISTS $this->table_name (
       id mediumint(9) UNSIGNED NOT NULL AUTO_INCREMENT,
       created_at TIMESTAMP,
       name tinytext NOT NULL,
@@ -15,5 +20,16 @@ class VamMentor {
 
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     dbDelta( $sql );
+  }
+
+  public function insertMentor() {
+    global $wpdb;
+
+    $wpdb->insert( 
+      $this->table_name, 
+      array( 
+        'name' => 'test'
+      ) 
+    );
   }
 }
