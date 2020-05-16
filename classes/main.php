@@ -4,7 +4,7 @@ require_once "mentor.php";
 class VamMain {
   function __construct() {
     $mentor = new VamMentor();
-    $mentor->createTable();
+    $mentor->init();
   }
 
   function activate() {
