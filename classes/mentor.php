@@ -13,6 +13,7 @@ class VamMentor {
     // add_action('admin_menu', [$this, 'addToAdminMenu']);
     // add_action('admin_menu', [$this, 'addSubMenuToAdminMenu']);
     add_action('init', [$this, 'addUserRole']);
+    add_shortcode( 'vammentor', [$this, 'getTemplate'] );
   }
 
   public function addUserRole() {
@@ -21,6 +22,23 @@ class VamMentor {
     ];
     remove_role('mentor');
     add_role('mentor', 'Mentor', $capabilities);
+  }
+
+  public function getTemplate() {
+    $args1 = [
+      'role' => 'mentor',
+      'orderby' => 'user_registered',
+      'order' => 'ASC'
+    ];
+    
+    $mentors = get_users($args1);
+    $a = '<ul>';
+    foreach ($mentors as $user) {
+      $a .= '<li>' . $user->display_name.'['.$user->user_email . ']</li>';
+    }
+    $a .= '</ul>';
+    return $a;
+    // require_once DIR_PLUGIN . 'templates/mentor.php';
   }
   
   private function createTable() {
