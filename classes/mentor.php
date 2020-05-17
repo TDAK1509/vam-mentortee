@@ -1,6 +1,7 @@
 <?php
 class VamMentor {
   private $table_name;
+  private $menuSlug = 'vam_mentor';
 
   function __construct() {
     global $wpdb;
@@ -10,6 +11,7 @@ class VamMentor {
   public function init() {
     $this->createTable();
     add_action('admin_menu', [$this, 'addToAdminMenu']);
+    add_action('admin_menu', [$this, 'addSubMenuToAdminMenu']);
   }
   
   private function createTable() {
@@ -28,10 +30,10 @@ class VamMentor {
   }
 
   public function addToAdminMenu() {
-    $pageTitle = 'Quản lý Mentor';
+    $pageTitle = 'Manage mentors';
     $menuTitle = 'Mentor';
     $capability = 'manage_options';
-    $menuSlug = 'vam_mentor';
+    $menuSlug = $this->menuSlug;
     $callback = [$this, 'getTemplate'];
     $iconUrl = 'dashicons-businessman';
     $position = null;
@@ -39,8 +41,24 @@ class VamMentor {
     add_menu_page($pageTitle, $menuTitle, $capability, $menuSlug, $callback, $iconUrl, $position);
   }
 
+  public function addSubMenuToAdminMenu() {
+    $parentSlug = $this->menuSlug;
+    $capability = 'manage_options';
+
+    add_submenu_page($parentSlug, 'Add new mentor', 'Add mentor', $capability, 'vam_mentor_add', [$this, 'getAddMentorTemplate'], null);
+    add_submenu_page($parentSlug, 'Update mentor', 'Update mentor', $capability, 'vam_mentor_update', [$this, 'getUpdateMentorTemplate'], null);
+  }
+
   public function getTemplate() {
-    require_once DIR_PLUGIN . 'templates/mentor.php';
+    require_once DIR_PLUGIN . 'templates/mentor_main.php';
+  }
+
+  public function getAddMentorTemplate() {
+    require_once DIR_PLUGIN . 'templates/mentor_add.php';
+  }
+
+  public function getUpdateMentorTemplate() {
+    require_once DIR_PLUGIN . 'templates/mentor_update.php';
   }
 
   public function insertMentor() {
