@@ -9,9 +9,18 @@ class VamMentor {
   }
 
   public function init() {
-    $this->createTable();
-    add_action('admin_menu', [$this, 'addToAdminMenu']);
-    add_action('admin_menu', [$this, 'addSubMenuToAdminMenu']);
+    // $this->createTable();
+    // add_action('admin_menu', [$this, 'addToAdminMenu']);
+    // add_action('admin_menu', [$this, 'addSubMenuToAdminMenu']);
+    add_action('init', [$this, 'addUserRole']);
+  }
+
+  public function addUserRole() {
+    $capabilities = [
+      'read' => true
+    ];
+    remove_role('mentor');
+    add_role('mentor', 'Mentor', $capabilities);
   }
   
   private function createTable() {
