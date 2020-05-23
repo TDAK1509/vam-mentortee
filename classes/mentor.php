@@ -1,17 +1,10 @@
 <?php
 class VamMentor {
-  private $table_name;
-  private $menuSlug = 'vam_mentor_add';
-
-  function __construct() {
-    global $wpdb;
-    $this->table_name = $wpdb->prefix . MENTOR_TABLE;
-  }
-
   public function init() {
-    // $this->createTable();
-    // add_action('admin_menu', [$this, 'addToAdminMenu']);
-    // add_action('admin_menu', [$this, 'addSubMenuToAdminMenu']);
+    // Add extra fields to user profile form
+    add_action( 'show_user_profile', [$this, 'addExtraProfileFields'] );
+
+    // Add user role
     add_action('init', [$this, 'addUserRole']);
     add_shortcode( 'vammentor', [$this, 'getTemplate'] );
   }
@@ -34,64 +27,69 @@ class VamMentor {
     $mentors = get_users($args1);
     $a = '<ul>';
     foreach ($mentors as $user) {
-      $a .= '<li>' . $user->display_name.'['.$user->user_email . ']</li>';
+      $a .= "<img src='" . get_avatar_url($user->ID) . "' />";
+      $a .= "<p>$user->display_name</p>";
     }
     $a .= '</ul>';
     return $a;
     // require_once DIR_PLUGIN . 'templates/mentor.php';
   }
-  
-  private function createTable() {
-    global $wpdb;
-    $charset_collate = $wpdb->get_charset_collate();
 
-    $sql = "CREATE TABLE IF NOT EXISTS $this->table_name (
-      id mediumint(9) UNSIGNED NOT NULL AUTO_INCREMENT,
-      created_at TIMESTAMP,
-      name tinytext NOT NULL,
-      PRIMARY KEY  (id)
-    ) $charset_collate;";
-
-    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-    dbDelta( $sql );
+  public function addExtraProfileFields(WP_User $user) {
+    echo '
+    <h2>Mentor profile</h2>
+    <table class="form-table" role="presentation">
+      <tbody>
+        ' . $this->getRadioFieldHTML("Gender", "gender", $this->getGenderData()) . '
+      </tbody>
+    </table>';
   }
 
-  public function addToAdminMenu() {
-    $pageTitle = 'Manage mentors';
-    $menuTitle = 'Mentor';
-    $capability = 'manage_options';
-    $menuSlug = $this->menuSlug;
-    $callback = '';
-    $iconUrl = 'dashicons-businessman';
-    $position = null;
+  private function getRadioFieldHTML($label, $name, $radios) {
+    $radiosHTML = "";
 
-    add_menu_page($pageTitle, $menuTitle, $capability, $menuSlug, $callback, $iconUrl, $position);
+    foreach($radios as $radio) {
+      $id = $radio['id'];
+      $value = $radio['value'];
+      $radioLabel = $radio['label'];
+
+      $radiosHTML .= "
+        <label for='$id'>
+          <input name='$name' id='$id' type='radio' value='$value' />
+          $radioLabel
+        </label>
+      ";
+    }
+
+    return '
+      <tr>
+        <th scope="row">' . $label . '</th>
+        <td>
+          ' . $radiosHTML . '
+        </td>
+      </tr>
+    ';
   }
 
-  public function addSubMenuToAdminMenu() {
-    $parentSlug = $this->menuSlug;
-    $capability = 'manage_options';
+  private function getGenderData() {
+    return [
+      [
+        "id" => "male",
+        "value" => "male",
+        "label" => "Male"
+      ],
 
-    add_submenu_page($parentSlug, 'Add new mentor', 'Add mentor', $capability, $parentSlug, [$this, 'getAddMentorTemplate'], null);
-    add_submenu_page($parentSlug, 'Update mentor', 'Update mentor', $capability, 'vam_mentor_update', [$this, 'getUpdateMentorTemplate'], null);
-  }
+      [
+        "id" => "female",
+        "value" => "female",
+        "label" => "Female"
+      ],
 
-  public function getAddMentorTemplate() {
-    require_once DIR_PLUGIN . 'templates/mentor_add.php';
-  }
-
-  public function getUpdateMentorTemplate() {
-    require_once DIR_PLUGIN . 'templates/mentor_update.php';
-  }
-
-  public function insertMentor() {
-    global $wpdb;
-
-    $wpdb->insert( 
-      $this->table_name, 
-      array( 
-        'name' => 'test'
-      ) 
-    );
+      [
+        "id" => "others",
+        "value" => "others",
+        "label" => "Others"
+      ]
+    ];
   }
 }
