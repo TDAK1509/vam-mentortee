@@ -4,6 +4,9 @@ class VamMentor {
     // Add extra fields to user profile form
     add_action( 'show_user_profile', [$this, 'addExtraProfileFields'] );
 
+    // Update extra fields on user update
+    add_action('personal_options_update', [$this, 'updateExtraProfileFields']);
+
     // Add user role
     add_action('init', [$this, 'addUserRole']);
     add_shortcode( 'vammentor', [$this, 'getTemplate'] );
@@ -52,10 +55,11 @@ class VamMentor {
       $id = $radio['id'];
       $value = $radio['value'];
       $radioLabel = $radio['label'];
+      $checked = $radio['checked'] ? 'checked' : '';
 
       $radiosHTML .= "
         <label for='$id'>
-          <input name='$name' id='$id' type='radio' value='$value' />
+          <input name='$name' id='$id' type='radio' value='$value' $checked />
           $radioLabel
         </label>
       ";
@@ -72,24 +76,39 @@ class VamMentor {
   }
 
   private function getGenderData() {
-    return [
+    $gender = get_user_meta(get_current_user_id(), 'gender', true);
+
+    $data = [
       [
         "id" => "male",
         "value" => "male",
-        "label" => "Male"
+        "label" => "Male",
+        "checked" => $gender === "male"
       ],
 
       [
         "id" => "female",
         "value" => "female",
-        "label" => "Female"
+        "label" => "Female",
+        "checked" => $gender === "female"
       ],
 
       [
         "id" => "others",
         "value" => "others",
-        "label" => "Others"
+        "label" => "Others",
+        "checked" => $gender === "others"
       ]
     ];
+
+    return $data;
+  }
+
+  public function updateExtraProfileFields($userId) {
+    if (!current_user_can('edit_user', $userId)) {
+      return;
+    }
+
+    update_user_meta($userId, 'gender', $_REQUEST['gender']);
   }
 }
