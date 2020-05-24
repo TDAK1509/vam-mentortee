@@ -44,6 +44,7 @@ class VamMentor {
     <table class="form-table" role="presentation">
       <tbody>
         ' . $this->getRadioFieldHTML("Gender", "gender", $this->getGenderData()) . '
+        ' . $this->getTextFieldHTML("Company", "company", $this->getCompanyData()) . '
       </tbody>
     </table>';
   }
@@ -75,6 +76,14 @@ class VamMentor {
     ';
   }
 
+  private function getTextFieldHTML($label, $name, $value = '') {
+    return "
+    <tr class='user-url-wrap'>
+      <th><label for='$name'>$label</label></th>
+      <td><input type='text' name='$name' id='$name' value='$value' class='regular-text code'></td>
+    </tr>";
+  }
+
   private function getGenderData() {
     $gender = get_user_meta(get_current_user_id(), 'gender', true);
 
@@ -104,11 +113,17 @@ class VamMentor {
     return $data;
   }
 
+  private function getCompanyData() {
+    $company = get_user_meta(get_current_user_id(), 'company', true);
+    return $company;
+  }
+
   public function updateExtraProfileFields($userId) {
     if (!current_user_can('edit_user', $userId)) {
       return;
     }
 
     update_user_meta($userId, 'gender', $_REQUEST['gender']);
+    update_user_meta($userId, 'company', $_REQUEST['company']);
   }
 }
