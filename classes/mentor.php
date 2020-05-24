@@ -1,6 +1,9 @@
 <?php
 class VamMentor {
   public function init() {
+    // Include css file
+    add_action('show_user_profile', [$this, 'importCss']);
+
     // Add extra fields to user profile form
     add_action( 'show_user_profile', [$this, 'addExtraProfileFields'] );
 
@@ -10,6 +13,10 @@ class VamMentor {
     // Add user role
     add_action('init', [$this, 'addUserRole']);
     add_shortcode( 'vammentor', [$this, 'getTemplate'] );
+  }
+
+  public function importCss() {
+    wp_enqueue_style('vammentor-admin', DIR_PLUGIN . "/css/mentor_admin.css");
   }
 
   public function addUserRole() {
@@ -75,7 +82,7 @@ class VamMentor {
 
       if (($i + 1) < $radiosLength) {
         $radiosHTML .= "
-          <label for='$id'>
+          <label class='mentor-admin__radio-field' for='$id'>
             <input name='$name' id='$id' type='radio' value='$value' $checked />
             $radioLabel
           </label>
