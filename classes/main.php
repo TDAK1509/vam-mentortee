@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+  die;
+}
+
 require_once "mentor-admin.php";
 require_once "mentor-view.php";
 

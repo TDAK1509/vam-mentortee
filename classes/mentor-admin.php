@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+  die;
+}
+
 class VamMentorAdmin {
   public static function init() {
     $self = new self();
