@@ -4,9 +4,7 @@ require_once "mentor-view.php";
 
 class VamMain {
   function __construct() {
-    $mentorAdmin = new VamMentorAdmin();
-    $mentorAdmin->init();
-
+    VamMentorAdmin::init();
     VamMentorView::init();
   }
 

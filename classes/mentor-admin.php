@@ -1,17 +1,18 @@
 <?php
 class VamMentorAdmin {
-  public function init() {
+  public static function init() {
+    $self = new self();
     // Include css file
-    add_action('show_user_profile', [$this, 'importCss']);
+    add_action('show_user_profile', [$self, 'importCss']);
 
     // Add extra fields to user profile form
-    add_action( 'show_user_profile', [$this, 'addExtraProfileFields'] );
+    add_action( 'show_user_profile', [$self, 'addExtraProfileFields'] );
 
     // Update extra fields on user update
-    add_action('personal_options_update', [$this, 'updateExtraProfileFields']);
+    add_action('personal_options_update', [$self, 'updateExtraProfileFields']);
 
     // Add user role
-    add_action('init', [$this, 'addUserRole']);    
+    add_action('init', [$self, 'addUserRole']);    
   }
 
   public function importCss() {
