@@ -1,5 +1,5 @@
 <?php
-class VamMentor {
+class VamMentorAdmin {
   public function init() {
     // Include css file
     add_action('show_user_profile', [$this, 'importCss']);
@@ -11,8 +11,7 @@ class VamMentor {
     add_action('personal_options_update', [$this, 'updateExtraProfileFields']);
 
     // Add user role
-    add_action('init', [$this, 'addUserRole']);
-    add_shortcode( 'vammentor', [$this, 'getTemplate'] );
+    add_action('init', [$this, 'addUserRole']);    
   }
 
   public function importCss() {
@@ -25,24 +24,6 @@ class VamMentor {
     ];
     remove_role('mentor');
     add_role('mentor', 'Mentor', $capabilities);
-  }
-
-  public function getTemplate() {
-    $args1 = [
-      'role' => 'mentor',
-      'orderby' => 'user_registered',
-      'order' => 'ASC'
-    ];
-    
-    $mentors = get_users($args1);
-    $a = '<ul>';
-    foreach ($mentors as $user) {
-      $a .= "<img src='" . get_avatar_url($user->ID) . "' />";
-      $a .= "<p>$user->display_name</p>";
-    }
-    $a .= '</ul>';
-    return $a;
-    // require_once DIR_PLUGIN . 'templates/mentor.php';
   }
 
   public function addExtraProfileFields(WP_User $user) {
