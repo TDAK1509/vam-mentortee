@@ -32,6 +32,10 @@ class VamMentorAdmin {
   }
 
   public function addExtraProfileFields(WP_User $user) {
+    if (!$this->userIsMentor()) {
+      return;
+    }
+
     echo '
     <h2>Mentor profile</h2>
     <table class="form-table" role="presentation">
@@ -178,6 +182,12 @@ class VamMentorAdmin {
 
   private function getTextFieldData($fieldName) {
     return get_user_meta(get_current_user_id(), $fieldName, true);
+  }
+
+  private function userIsMentor() {
+    $user = wp_get_current_user();
+    $roles = ( array ) $user->roles;
+    return in_array("mentor", $roles);
   }
 
   public function updateExtraProfileFields($userId) {
