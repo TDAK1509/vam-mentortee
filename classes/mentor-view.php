@@ -20,7 +20,7 @@ class VamMentorView {
         $mentors = $this->getMentors();
 
         $html = "
-        <section class='mentor-view'>
+        <div class='mentor-view'>
             <h2 class='mentor-view__heading elementor-heading-title elementor-size-default'>DANH SÁCH MENTOR</h2>
             <div class='mentor-view__filter-container'>
                 <h4 class='mentor-view__filter-description'>Lọc theo:</h4>
@@ -45,13 +45,15 @@ class VamMentorView {
 
         $html .= "<div class='mentor-view__mentors'><ul class='mentor-view__list'>";
         foreach ($mentors as $user) {
-            $html .= "
-            <li class='mentor-view__list-item'>
-                <img src='" . get_avatar_url($user->ID) . "' />
-                <p>$user->display_name</p>
-            </li>";
+            $html .= $this->getMentorHTML($user);
         }
-        $html .= '</ul></div></section>';
+        foreach ($mentors as $user) {
+            $html .= $this->getMentorHTML($user);
+        }
+        foreach ($mentors as $user) {
+            $html .= $this->getMentorHTML($user);
+        }
+        $html .= '</ul></div></div>';
         return $html;
     }
 
@@ -61,5 +63,13 @@ class VamMentorView {
             'orderby' => 'user_registered',
             'order' => 'ASC'
         ]);
+    }
+
+    private function getMentorHTML($user) {
+        return "
+        <li class='mentor-view__list-item'>
+            <img class='mentor-view__avatar' src='" . get_avatar_url($user->ID) . "' />
+            <p>$user->display_name</p>
+        </li>";
     }
 }
