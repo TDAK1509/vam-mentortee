@@ -68,6 +68,26 @@
   margin-top: 20px;
 }
 
+.mentor-view__list-item > p,
+.mentor-view__list-item > h5 {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.mentor-view__topics {
+  padding-top: 10px;
+}
+
+.mentor-view__list-item > h5 {
+  padding-bottom: 10px;
+}
+
 .mentor-view__avatar {
   width: 100%;
+  margin-bottom: 15px;
+}
+
+.mentor-view__name {
+  text-transform: uppercase;
+  color: #45818e;
 }

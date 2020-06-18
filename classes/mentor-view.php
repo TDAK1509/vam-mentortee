@@ -66,10 +66,15 @@ class VamMentorView {
     }
 
     private function getMentorHTML($user) {
+        $userMetaData = get_user_meta($user->ID);
+
         return "
         <li class='mentor-view__list-item'>
             <img class='mentor-view__avatar' src='" . get_avatar_url($user->ID) . "' />
-            <p>$user->display_name</p>
+            <h5 class='mentor-view__name'>$user->display_name</h5>
+            <p><strong>" . $userMetaData['company'][0] . "</strong></p>
+            <p><strong>" . $userMetaData['title'][0] . "</strong></p>
+            <p class='mentor-view__topics'><strong>Lĩnh vực chia sẻ:</strong> " . $userMetaData['topics'][0] . "<p>
         </li>";
     }
 }
