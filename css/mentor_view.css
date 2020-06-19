@@ -91,3 +91,24 @@
   text-transform: uppercase;
   color: #45818e;
 }
+
+@media screen and (min-width: 600px) {
+  .mentor-view__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 20px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .mentor-view__list {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 30px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .mentor-view__list {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+}
