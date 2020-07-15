@@ -51,7 +51,9 @@ class VamMentorAdmin {
         ' . $this->getTextFieldHTML("Specific topics you feel comfortable advising about", "topics", $this->getFieldValueFromServer("topics")) . '
         ' . $this->getTextFieldHTML("Describe the activities, interests, and/or hobbies that are most meaningful to you", "hobbies", $this->getFieldValueFromServer("hobbies")) . '
         ' . $this->getTextFieldHTML("Mentee capacity", "mentee_capacity", $this->getFieldValueFromServer("mentee_capacity")) . '
-        ' . $this->getSelectFieldHTML("Mentoring program", "mentoring_program", $this->getFieldValueFromServer("mentoring_program")) . '
+        ' . $this->getSelectFieldHTML("Mentoring program", "mentoring_program") . '
+        ' . $this->getSelectFieldHTML("Career field", "career_field") . '
+        ' . $this->getSelectFieldHTML("Expertise", "expertise") . '
       </tbody>
     </table>';
   }
@@ -119,6 +121,10 @@ class VamMentorAdmin {
     switch($name) {
       case "mentoring_program":
         return $this->getOptionsHTMLMentoringProgram();
+      case "career_field":
+        return $this->getOptionsHTMLCareerField();
+      case "expertise":
+        return $this->getOptionsHTMLExpertise();
       default:
         return [];
     }
@@ -140,6 +146,67 @@ class VamMentorAdmin {
     }
 
     return $html;
+  }
+
+  private function getOptionsHTMLCareerField() {
+    $selectedValue = $this->getFieldValueFromServer("career_field");
+    $options = $this->getCareerFieldValues();
+
+    $html = "<option>Click to select</option>";
+
+    foreach ($options as $option) {
+      if ($option === $selectedValue) {
+        $html .= "<option selected>$option</option>";
+      } else {
+        $html .= "<option>$option</option>";
+      }
+      
+    }
+
+    return $html;
+  }
+
+  private function getCareerFieldValues() {
+    $careerFieldExpertiseArray = $this->getValueArrayCareerFieldExpertise();
+    return array_keys($careerFieldExpertiseArray);
+  }
+
+  private function getValueArrayCareerFieldExpertise() {
+    $json = file_get_contents(DIR_PLUGIN . "/json/career_field_expertise.json");
+    $jsonToArray = (array) json_decode($json);
+    return $jsonToArray;
+  }
+
+  private function getOptionsHTMLExpertise() {
+    $options = $this->getExpertiseFieldValues();
+
+    if (count($options) === 0) {
+      return "<option>Please select Career field First</option>";
+    }
+
+    $html = "";        
+
+    foreach ($options as $option) {
+      if ($option === $selectedValue) {
+        $html .= "<option selected>$option</option>";
+      } else {
+        $html .= "<option>$option</option>";
+      }
+      
+    }
+
+    return $html;
+  }
+
+  private function getExpertiseFieldValues() {
+    $selectedValue = $this->getFieldValueFromServer("expertise");
+
+    if (!$selectedValue) {
+      return [];
+    }
+
+    $careerFieldValues = $this->getCareerFieldValues();
+    return $careerFieldValues[$selectedValue];
   }
 
   private function getGenderData() {
@@ -248,5 +315,7 @@ class VamMentorAdmin {
 
     // Select fields
     update_user_meta($userId, 'mentoring_program', $_REQUEST['mentoring_program']);
+    update_user_meta($userId, 'career_field', $_REQUEST['career_field']);
+    update_user_meta($userId, 'expertise', $_REQUEST['expertise']);
   }
 }
