@@ -41,20 +41,17 @@ class VamMentorAdmin {
     <table class="form-table" role="presentation">
       <tbody>
         ' . $this->getRadioFieldHTML("Gender", "gender", $this->getGenderData()) . '
-        ' . $this->getTextFieldHTML("Company", "company", $this->getTextFieldData("company")) . '
-        ' . $this->getTextFieldHTML("Title", "title", $this->getTextFieldData("title")) . '
-        ' . $this->getTextFieldHTML("Phone", "phone", $this->getTextFieldData("phone")) . '
-        ' . $this->getTextFieldHTML("Method of contact", "method_of_contact", $this->getTextFieldData("method_of_contact")) . '
-        ' . $this->getTextFieldHTML("Meeting frequency", "meeting_frequency", $this->getTextFieldData("meeting_frequency")) . '
-        ' . $this->getTextFieldHTML("Year of experience", "year_of_experience", $this->getTextFieldData("year_of_experience")) . '
+        ' . $this->getTextFieldHTML("Company", "company", $this->getFieldValueFromServer("company")) . '
+        ' . $this->getTextFieldHTML("Title", "title", $this->getFieldValueFromServer("title")) . '
+        ' . $this->getTextFieldHTML("Phone", "phone", $this->getFieldValueFromServer("phone")) . '
+        ' . $this->getTextFieldHTML("Method of contact", "method_of_contact", $this->getFieldValueFromServer("method_of_contact")) . '
+        ' . $this->getTextFieldHTML("Meeting frequency", "meeting_frequency", $this->getFieldValueFromServer("meeting_frequency")) . '
+        ' . $this->getTextFieldHTML("Year of experience", "year_of_experience", $this->getFieldValueFromServer("year_of_experience")) . '
         ' . $this->getRadioFieldHTML("Degree", "degree", $this->getDegreeData()) . '
-        ' . $this->getTextFieldHTML("Current career field(s)", "current_career", $this->getTextFieldData("current_career")) . '
-        ' . $this->getTextFieldHTML("Current job function(s)", "current_job", $this->getTextFieldData("current_job")) . '
-        ' . $this->getTextFieldHTML("Past career field(s)", "past_career", $this->getTextFieldData("past_career")) . '
-        ' . $this->getTextFieldHTML("Past job function(s)", "past_job", $this->getTextFieldData("past_job")) . '
-        ' . $this->getTextFieldHTML("Specific topics you feel comfortable advising about", "topics", $this->getTextFieldData("topics")) . '
-        ' . $this->getTextFieldHTML("Describe the activities, interests, and/or hobbies that are most meaningful to you", "hobbies", $this->getTextFieldData("hobbies")) . '
-        ' . $this->getTextFieldHTML("Mentee capacity", "mentee_capacity", $this->getTextFieldData("mentee_capacity")) . '
+        ' . $this->getTextFieldHTML("Specific topics you feel comfortable advising about", "topics", $this->getFieldValueFromServer("topics")) . '
+        ' . $this->getTextFieldHTML("Describe the activities, interests, and/or hobbies that are most meaningful to you", "hobbies", $this->getFieldValueFromServer("hobbies")) . '
+        ' . $this->getTextFieldHTML("Mentee capacity", "mentee_capacity", $this->getFieldValueFromServer("mentee_capacity")) . '
+        ' . $this->getSelectFieldHTML("Mentoring program", "mentoring_program", $this->getFieldValueFromServer("mentoring_program")) . '
       </tbody>
     </table>';
   }
@@ -106,8 +103,47 @@ class VamMentorAdmin {
     </tr>";
   }
 
+  private function getSelectFieldHTML($label, $name) {
+    $optionsHTML = $this->getSelectOptionsHTMLByFieldName($name);
+
+    return "
+    <tr class='user-url-wrap'>
+      <th><label>$label</label></th>
+      <td>
+        <select class='mentor-admin__select-field' name='$name'>$optionsHTML</select>
+      </td>
+    </tr>";
+  }
+
+  private function getSelectOptionsHTMLByFieldName($name) {
+    switch($name) {
+      case "mentoring_program":
+        return $this->getOptionsHTMLMentoringProgram();
+      default:
+        return [];
+    }
+  }
+
+  private function getOptionsHTMLMentoringProgram() {
+    $selectedValue = $this->getFieldValueFromServer("mentoring_program");
+    $options = ["UEH Mentoring", "BK Mentoring", "FTU2 Mentoring", "HN Mentoring"];
+
+    $html = "<option>Click to select</option>";
+
+    foreach ($options as $option) {
+      if ($option === $selectedValue) {
+        $html .= "<option selected>$option</option>";
+      } else {
+        $html .= "<option>$option</option>";
+      }
+      
+    }
+
+    return $html;
+  }
+
   private function getGenderData() {
-    $gender = get_user_meta(get_current_user_id(), 'gender', true);
+    $gender = $this->getFieldValueFromServer("gender");
     $genderList = ["Nam", "Nữ"];
 
     $data = [
@@ -137,7 +173,7 @@ class VamMentorAdmin {
   }
 
   private function getDegreeData() {
-    $degree = get_user_meta(get_current_user_id(), 'degree', true);
+    $degree = $this->getFieldValueFromServer("degree");
     $degreeList = ["Cao đẳng", "Đại học", "Thạc sĩ", "Tiến sĩ"];
 
     $data = [
@@ -180,7 +216,7 @@ class VamMentorAdmin {
     return $data; 
   }
 
-  private function getTextFieldData($fieldName) {
+  private function getFieldValueFromServer($fieldName) {
     return get_user_meta(get_current_user_id(), $fieldName, true);
   }
 
@@ -203,14 +239,14 @@ class VamMentorAdmin {
     update_user_meta($userId, 'company', $_REQUEST['company']);
     update_user_meta($userId, 'title', $_REQUEST['title']);
     update_user_meta($userId, 'phone', $_REQUEST['phone']);
-    update_user_meta($userId, 'meeting_frequency', $_REQUEST['meeting_frequency']);
+    update_user_meta($userId, 'topics', $_REQUEST['topics']);
+    update_user_meta($userId, 'method_of_contact', $_REQUEST['method_of_contact']);
     update_user_meta($userId, 'year_of_experience', $_REQUEST['year_of_experience']);
-    update_user_meta($userId, 'current_career', $_REQUEST['current_career']);
-    update_user_meta($userId, 'current_job', $_REQUEST['current_job']);
-    update_user_meta($userId, 'past_career', $_REQUEST['past_career']);
-    update_user_meta($userId, 'past_job', $_REQUEST['past_job']);
     update_user_meta($userId, 'topics', $_REQUEST['topics']);
     update_user_meta($userId, 'hobbies', $_REQUEST['hobbies']);
     update_user_meta($userId, 'mentee_capacity', $_REQUEST['mentee_capacity']);
+
+    // Select fields
+    update_user_meta($userId, 'mentoring_program', $_REQUEST['mentoring_program']);
   }
 }
