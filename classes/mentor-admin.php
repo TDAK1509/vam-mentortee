@@ -157,7 +157,7 @@ class VamMentorAdmin {
     $selectedValue = $this->getFieldValueFromServer("mentoring_program");
     $options = ["UEH Mentoring", "BK Mentoring", "FTU2 Mentoring", "HN Mentoring"];
 
-    $html = "<option>Click to select</option>";
+    $html = "<option value=''>Click to select</option>";
 
     foreach ($options as $option) {
       if ($option === $selectedValue) {
@@ -175,7 +175,7 @@ class VamMentorAdmin {
     $selectedValue = $this->getFieldValueFromServer("career_field");
     $options = $this->getCareerFieldValues();
 
-    $html = "<option>Click to select</option>";
+    $html = "<option value=''>Click to select</option>";
 
     foreach ($options as $option) {
       if ($option === $selectedValue) {
@@ -195,15 +195,11 @@ class VamMentorAdmin {
 
   private function getOptionsHTMLExpertise() {
     $options = $this->getExpertiseFieldValues();
-
-    if (count($options) === 0) {
-      return "<option>Please select Career field First</option>";
-    }
-
-    $html = "";        
+    $selectedExpertise = $this->getFieldValueFromServer("expertise");
+    $html = "<option value=''>Please select Career field First</option>";
 
     foreach ($options as $option) {
-      if ($option === $selectedValue) {
+      if ($option === $selectedExpertise) {
         $html .= "<option selected>$option</option>";
       } else {
         $html .= "<option>$option</option>";
@@ -215,14 +211,13 @@ class VamMentorAdmin {
   }
 
   private function getExpertiseFieldValues() {
-    $selectedValue = $this->getFieldValueFromServer("expertise");
+    $selectedCareer = $this->getFieldValueFromServer("career_field");
 
-    if (!$selectedValue) {
+    if (!$selectedCareer) {
       return [];
     }
 
-    $careerFieldValues = $this->getCareerFieldValues();
-    return $careerFieldValues[$selectedValue];
+    return $this->careerExpertiseData[$selectedCareer];
   }
 
   private function getGenderData() {
