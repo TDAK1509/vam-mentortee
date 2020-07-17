@@ -44,15 +44,11 @@ class VamMentorView {
         ";
 
         $html .= "<div class='mentor-view__mentors'><ul class='mentor-view__list'>";
+        
         foreach ($mentors as $user) {
             $html .= $this->getMentorHTML($user);
         }
-        foreach ($mentors as $user) {
-            $html .= $this->getMentorHTML($user);
-        }
-        foreach ($mentors as $user) {
-            $html .= $this->getMentorHTML($user);
-        }
+
         $html .= '</ul></div></div>';
         return $html;
     }
