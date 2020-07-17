@@ -34,11 +34,11 @@ class VamMentorAdmin {
   }
 
   public function importCss() {
-    wp_enqueue_style($this->enqueueHandleName, DIR_PLUGIN . "/css/mentor_admin.css");
+    wp_enqueue_style($this->enqueueHandleName, DIR_PLUGIN . "/assets/css/mentor_admin.css");
   }
 
   public function importJs() {
-    wp_enqueue_script($this->enqueueHandleName, DIR_PLUGIN . "/js/mentor-admin.js", [], false, true);
+    wp_enqueue_script($this->enqueueHandleName, DIR_PLUGIN . "/assets/js/mentor-admin.js", [], false, true);
     $this->sendDataToUseInJavascriptFiles();
   }
 

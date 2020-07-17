@@ -27,33 +27,14 @@
 }
 
 .mentor-view__select {
-  background: #45818e;
   color: #fff;
   font-size: 11pt;
-
-  /* styling */
-  border-radius: 4px;
-  display: inline-block;
-  padding: 8px 15px;
-
-  /* reset */
-
-  margin: 0;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+  padding: 8px 30px 8px 15px;
+  border: 0;
+  border-radius: 5px;
+  background: url("../svg/arrow_down.svg") no-repeat right #45818e;
   -webkit-appearance: none;
-  -moz-appearance: none;
-
-  background-image: linear-gradient(45deg, transparent 50%, #fff 50%),
-    linear-gradient(135deg, #fff 50%, transparent 50%),
-    linear-gradient(to right, #fff, #fff);
-  background-position: calc(100% - 13px) 13px, calc(100% - 8px) 13px,
-    calc(100% - 28px) 6px;
-  background-size: 5px 5px, 5px 5px, 1px 19px;
-  background-repeat: no-repeat;
-
-  width: 100%;
+  background-position-x: 100%;
 }
 
 .mentor-view__list {
@@ -66,6 +47,8 @@
   margin: 0;
   padding: 0;
   margin-top: 20px;
+  font-size: 0.8rem;
+  line-height: 1rem;
 }
 
 .mentor-view__list-item > p,
@@ -89,7 +72,8 @@
 
 .mentor-view__name {
   text-transform: uppercase;
-  color: #45818e;
+  font-size: 1rem !important;
+  color: #45818e !important;
 }
 
 @media screen and (min-width: 600px) {
@@ -107,10 +91,6 @@
   .mentor-view__select-container {
     margin-top: 0;
     margin-left: 20px;
-  }
-
-  .mentor-view__select {
-    padding-right: 35px;
   }
 }
 

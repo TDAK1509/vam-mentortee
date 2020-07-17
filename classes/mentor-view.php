@@ -13,7 +13,7 @@ class VamMentorView {
     }
 
     public function importCss() {
-        wp_enqueue_style('vammentor-view', DIR_PLUGIN . "/css/mentor_view.css");
+        wp_enqueue_style('vammentor-view', DIR_PLUGIN . "/assets/css/mentor_view.css");
     }
 
     public function getTemplate() {        
