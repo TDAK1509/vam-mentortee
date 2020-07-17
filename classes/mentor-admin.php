@@ -4,10 +4,24 @@ if (!defined('ABSPATH')) {
 }
 
 class VamMentorAdmin {
+  private $enqueueHandleName = "vammentor-admin";
+  private $careerExpertiseData;
+
+  function __construct() {
+    $this->careerExpertiseData = $this->getCareerFieldExpertiseData();
+  }
+  
+  private function getCareerFieldExpertiseData() {
+    $json = file_get_contents(DIR_PLUGIN . "/json/career_field_expertise.json");
+    $jsonToArray = (array) json_decode($json);
+    return $jsonToArray;
+  }
+
   public static function init() {
     $self = new self();
-    // Include css file
+    // Include js css file
     add_action('show_user_profile', [$self, 'importCss']);
+    add_action('show_user_profile', [$self, 'importJs']);
 
     // Add extra fields to user profile form
     add_action( 'show_user_profile', [$self, 'addExtraProfileFields'] );
@@ -20,7 +34,16 @@ class VamMentorAdmin {
   }
 
   public function importCss() {
-    wp_enqueue_style('vammentor-admin', DIR_PLUGIN . "/css/mentor_admin.css");
+    wp_enqueue_style($this->enqueueHandleName, DIR_PLUGIN . "/css/mentor_admin.css");
+  }
+
+  public function importJs() {
+    wp_enqueue_script($this->enqueueHandleName, DIR_PLUGIN . "/js/mentor-admin.js", [], false, true);
+    $this->sendDataToUseInJavascriptFiles();
+  }
+
+  private function sendDataToUseInJavascriptFiles() {
+    wp_localize_script( $this->enqueueHandleName, "phpCareerExpertiseObj", $this->careerExpertiseData );
   }
 
   public function addUserRole() {
@@ -112,7 +135,7 @@ class VamMentorAdmin {
     <tr class='user-url-wrap'>
       <th><label>$label</label></th>
       <td>
-        <select class='mentor-admin__select-field' name='$name'>$optionsHTML</select>
+        <select class='mentor-admin__select-field' name='$name' id='$name'>$optionsHTML</select>
       </td>
     </tr>";
   }
@@ -167,14 +190,7 @@ class VamMentorAdmin {
   }
 
   private function getCareerFieldValues() {
-    $careerFieldExpertiseArray = $this->getValueArrayCareerFieldExpertise();
-    return array_keys($careerFieldExpertiseArray);
-  }
-
-  private function getValueArrayCareerFieldExpertise() {
-    $json = file_get_contents(DIR_PLUGIN . "/json/career_field_expertise.json");
-    $jsonToArray = (array) json_decode($json);
-    return $jsonToArray;
+    return array_keys($this->careerExpertiseData);
   }
 
   private function getOptionsHTMLExpertise() {
