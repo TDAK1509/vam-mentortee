@@ -190,7 +190,9 @@ class VamMentorAdmin {
   }
 
   private function getCareerFieldValues() {
-    return array_keys($this->careerExpertiseData);
+    $careerOptions = array_keys($this->careerExpertiseData);
+    sort($careerOptions);
+    return $careerOptions;
   }
 
   private function getOptionsHTMLExpertise() {
@@ -217,7 +219,9 @@ class VamMentorAdmin {
       return [];
     }
 
-    return $this->careerExpertiseData[$selectedCareer];
+    $expertises = $this->careerExpertiseData[$selectedCareer];
+    sort($expertises);
+    return $expertises;
   }
 
   private function getGenderData() {
