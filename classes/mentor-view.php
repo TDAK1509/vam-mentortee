@@ -8,7 +8,7 @@ class VamMentorView {
     private $mentors;
 
     function __construct() {
-        $this->mentors = $this->getMentors();
+        $this->mentors = $this->getMentorsInfo();
       }
 
     public static function init() {
@@ -34,6 +34,28 @@ class VamMentorView {
         wp_localize_script( $this->enqueueHandleName, "phpMentors", $this->mentors );
     }
 
+    private function getMentorsInfo() {
+        $mentors = $this->getMentors();
+        $mentorsInfo = [];
+
+        foreach($mentors as $mentor) {
+            $userMetaData = get_user_meta($mentor->ID);
+
+            $mentorInfo = [
+                "avatar" => get_avatar_url($mentor->user_email),
+                "display_name" => $mentor->display_name,
+                "company" => $userMetaData["company"][0],
+                "title" => $userMetaData["title"][0],
+                "mentoring_program" => $userMetaData["mentoring_program"][0],
+                "expertise" => $userMetaData["expertise"][0],
+            ];
+
+            array_push($mentorsInfo, $mentorInfo);
+        }
+
+        return $mentorsInfo;
+    }
+
     private function getMentors() {
         return get_users([
             'role' => 'mentor',
@@ -50,43 +72,47 @@ class VamMentorView {
                 <h4 class='mentor-view__filter-description'>Lọc theo:</h4>
 
                 <div class='mentor-view__select-container'>
-                    <select class='mentor-view__select'>
-                        <option value=''>Chương trình mentoring</option>
-                        <option>B</option>
-                        <option>C</option>
-                    </select>
-                </div>
-
-                <div class='mentor-view__select-container'>
-                    <select class='mentor-view__select'>
-                        <option value=''>Lĩnh vực chia sẻ</option>
-                        <option>B</option>
-                        <option>C</option>
+                    <select class='mentor-view__select' id='mentoring_programs'>
+                        " . $this->getMentoringProgramOptionsHTML() . "
                     </select>
                 </div>
             </div>
         ";
 
-        $html .= "<div class='mentor-view__mentors'><ul class='mentor-view__list'>";
+        $html .= "<div class='mentor-view__mentors'><ul class='mentor-view__list' id='mentor-list'>";
         
-        foreach ($this->mentors as $user) {
-            $html .= $this->getMentorHTML($user);
+        foreach ($this->mentors as $mentor) {
+            $html .= $this->getMentorHTML($mentor);
         }
 
         $html .= '</ul></div></div>';
         return $html;
     }
 
-    private function getMentorHTML($user) {
-        $userMetaData = get_user_meta($user->ID);
+    private function getMentoringProgramOptionsHTML() {
+        $mentoringPrograms = $this->getMentoringPrograms();
 
+        $html = "<option value=''>Chương trình mentoring</option>";
+
+        foreach($mentoringPrograms as $program) {
+            $html .= "<option>$program</option>";
+        }
+
+        return $html;
+    }
+
+    private function getMentoringPrograms() {
+        return ["UEH Mentoring", "BK Mentoring", "FTU2 Mentoring", "HN Mentoring"];
+    }
+
+    private function getMentorHTML($mentor) {
         return "
         <li class='mentor-view__list-item'>
-            <img class='mentor-view__avatar' src='" . get_avatar_url($user->ID) . "' />
-            <h5 class='mentor-view__name'>$user->display_name</h5>
-            <p><strong>" . $userMetaData['company'][0] . "</strong></p>
-            <p><strong>" . $userMetaData['title'][0] . "</strong></p>
-            <p class='mentor-view__topics'><strong>Lĩnh vực chia sẻ:</strong> " . $userMetaData['topics'][0] . "<p>
+            <img class='mentor-view__avatar' src='" . $mentor["avatar"] . "' />
+            <h5 class='mentor-view__name'>" . $mentor['display_name'] . "</h5>
+            <p><strong>" . $mentor['company'] . "</strong></p>
+            <p><strong>" . $mentor['title'] . "</strong></p>
+            <p class='mentor-view__topics'><strong>Chuyên ngành:</strong> " . $mentor['expertise'] . "<p>
         </li>";
     }
 }
