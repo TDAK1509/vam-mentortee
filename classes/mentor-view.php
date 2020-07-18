@@ -42,6 +42,7 @@ class VamMentorView {
             $userMetaData = get_user_meta($mentor->ID);
 
             $mentorInfo = [
+                "id" => $mentor->ID,
                 "avatar" => get_avatar_url($mentor->user_email),
                 "display_name" => $mentor->display_name,
                 "company" => $userMetaData["company"][0],
@@ -144,6 +145,8 @@ class VamMentorView {
       }
 
     private function getMentorHTML($mentor) {
+        $mentorDetailsPage = $_SERVER['REQUEST_URI'] . $mentor["id"] . "/";
+        echo $mentorDetailsPage;
         return "
         <li class='mentor-view__list-item'>
             <img class='mentor-view__avatar' src='" . $mentor["avatar"] . "' />
@@ -151,6 +154,9 @@ class VamMentorView {
             <p><strong>" . $mentor['company'] . "</strong></p>
             <p><strong>" . $mentor['title'] . "</strong></p>
             <p class='mentor-view__topics'><strong>Chuyên ngành:</strong> " . $mentor['expertise'] . "<p>
+            <div class='mentor-view__button-container'>
+                <a class='mentor-view__button-more-details' href='$mentorDetailsPage'>XEM HỒ SƠ</a>
+            </div>
         </li>";
     }
 }

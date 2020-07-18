@@ -81,6 +81,26 @@
   color: #45818e !important;
 }
 
+.mentor-view__button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.mentor-view__button-more-details {
+  flex: 1;
+  text-align: center;
+  background: #45818e;
+  color: #fff;
+  padding: 8px;
+  font-size: 1rem !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
 @media screen and (min-width: 600px) {
   .mentor-view__list {
     display: grid;
