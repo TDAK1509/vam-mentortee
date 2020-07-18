@@ -8,8 +8,31 @@ require_once "mentor-view.php";
 
 class VamMain {
   function __construct() {
-    VamMentorAdmin::init();
-    VamMentorView::init();
+    if ($this->isAdminPage() === true) {
+      VamMentorAdmin::init();
+    }
+
+    if ($this->isMentorListPage() === true) {
+      VamMentorView::init();
+    }
+  }
+
+  private function isAdminPage() {
+    return $this->isPageUriContainingWord("/wp-admin");
+  }
+
+  private function isMentorListPage() {
+    return $this->isPageUriContainingWord("/mentor-list");
+  }
+
+  private function isPageUriContainingWord($word) {
+    $pageUri = $_SERVER['REQUEST_URI'];
+
+    if (strpos($pageUri, $word) === false) {
+      return false;
+    }
+
+    return true;
   }
 
   function activate() {
