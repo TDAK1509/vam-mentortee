@@ -198,7 +198,7 @@ class VamMentorAdmin {
   private function getOptionsHTMLExpertise() {
     $options = $this->getExpertiseFieldValues();
     $selectedExpertise = $this->getFieldValueFromServer("expertise");
-    $html = "<option value=''>Please select Career field First</option>";
+    $html = "<option value=''>Please select career field first</option>";
 
     foreach ($options as $option) {
       if ($option === $selectedExpertise) {
