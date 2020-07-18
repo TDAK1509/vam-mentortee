@@ -35,6 +35,7 @@
   background: url("../svg/arrow_down.svg") no-repeat right #45818e;
   -webkit-appearance: none;
   background-position-x: 100%;
+  width: 100%;
 }
 
 .mentor-view__list {
@@ -91,6 +92,10 @@
   .mentor-view__select-container {
     margin-top: 0;
     margin-left: 20px;
+  }
+
+  .mentor-view__select {
+    width: auto;
   }
 }
 
