@@ -86,7 +86,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 18px;
 }
 
 .mentor-view__button-more-details {
@@ -97,7 +97,6 @@
   padding: 8px;
   font-size: 1rem !important;
   font-weight: 700;
-  text-transform: uppercase;
   text-decoration: none;
 }
 
