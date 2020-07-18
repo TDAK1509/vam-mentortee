@@ -1,10 +1,17 @@
 jQuery(document).ready(function () {
   const mentoringProgramsSelect = jQuery("#mentoring_programs");
+  const expertisesSelect = jQuery("#expertises");
   const mentorListDOM = jQuery("#mentor-list");
 
   mentoringProgramsSelect.on("change", (event) => {
     const selectedProgram = event.target.value;
     const filteredMentors = getMentorsByMentoringProgram(selectedProgram);
+    mentorListDOM.html(getMentorListHtml(filteredMentors));
+  });
+
+  expertisesSelect.on("change", (event) => {
+    const selectedExpertise = event.target.value;
+    const filteredMentors = getMentorsByExpertise(selectedExpertise);
     mentorListDOM.html(getMentorListHtml(filteredMentors));
   });
 });
@@ -13,6 +20,10 @@ function getMentorsByMentoringProgram(mentoringProgram) {
   return phpMentors.filter(
     (mentor) => mentor.mentoring_program === mentoringProgram
   );
+}
+
+function getMentorsByExpertise(expertise) {
+  return phpMentors.filter((mentor) => mentor.expertise === expertise);
 }
 
 function getMentorListHtml(mentors) {

@@ -76,6 +76,12 @@ class VamMentorView {
                         " . $this->getMentoringProgramOptionsHTML() . "
                     </select>
                 </div>
+
+                <div class='mentor-view__select-container'>
+                    <select class='mentor-view__select' id='expertises'>
+                        " . $this->getExpertiseOptionsHTML() . "
+                    </select>
+                </div>
             </div>
         ";
 
@@ -104,6 +110,38 @@ class VamMentorView {
     private function getMentoringPrograms() {
         return ["UEH Mentoring", "BK Mentoring", "FTU2 Mentoring", "HN Mentoring"];
     }
+
+    private function getExpertiseOptionsHTML() {
+        $expertises = $this->getExpertises();
+        sort($expertises);
+
+        $html = "<option value=''>Chuyên ngành</option>";
+
+        foreach($expertises as $expertise) {
+            $html .= "<option>$expertise</option>";
+        }
+
+        return $html;
+    }
+
+    private function getExpertises() {
+        $careerFieldExpertiseData = $this->getCareerFieldExpertiseData();
+        $expertises = [];
+
+        foreach($careerFieldExpertiseData as $career) {
+            foreach($career as $expertise) {
+                array_push($expertises, $expertise);
+            }
+        }
+
+        return $expertises;
+    }
+
+    private function getCareerFieldExpertiseData() {
+        $json = file_get_contents(DIR_PLUGIN . "/json/career_field_expertise.json");
+        $jsonToArray = (array) json_decode($json);
+        return $jsonToArray;
+      }
 
     private function getMentorHTML($mentor) {
         return "
