@@ -4,21 +4,45 @@ if (!defined('ABSPATH')) {
 }
 
 class VamMentorView {
+    private $enqueueHandleName = "vammentor-view";
+    private $mentors;
+
+    function __construct() {
+        $this->mentors = $this->getMentors();
+      }
+
     public static function init() {
         $self = new self();
-        // Include css file
-        add_action('wp', [$self, 'importCss']);
+        // Include js css file
+        add_action('wp_enqueue_scripts', [$self, 'importCss']);
+        add_action('wp_enqueue_scripts', [$self, 'importJs']);
 
         add_shortcode( 'vammentor', [$self, 'getTemplate'] );
     }
 
     public function importCss() {
-        wp_enqueue_style('vammentor-view', DIR_PLUGIN . "/assets/css/mentor_view.css");
+        wp_enqueue_style($this->enqueueHandleName, DIR_PLUGIN . "/assets/css/mentor_view.css");
     }
 
-    public function getTemplate() {        
-        $mentors = $this->getMentors();
+    public function importJs() {
+        wp_enqueue_script("jquery");
+        wp_enqueue_script($this->enqueueHandleName, DIR_PLUGIN . "/assets/js/mentor-view.js", [], false, true);
+        $this->sendDataToUseInJavascriptFiles();
+    }
 
+    private function sendDataToUseInJavascriptFiles() {
+        wp_localize_script( $this->enqueueHandleName, "phpMentors", $this->mentors );
+    }
+
+    private function getMentors() {
+        return get_users([
+            'role' => 'mentor',
+            'orderby' => 'user_registered',
+            'order' => 'ASC'
+        ]);
+    }
+
+    public function getTemplate() {
         $html = "
         <div class='mentor-view'>
             <h2 class='mentor-view__heading elementor-heading-title elementor-size-default'>DANH SÁCH MENTOR</h2>
@@ -45,20 +69,12 @@ class VamMentorView {
 
         $html .= "<div class='mentor-view__mentors'><ul class='mentor-view__list'>";
         
-        foreach ($mentors as $user) {
+        foreach ($this->mentors as $user) {
             $html .= $this->getMentorHTML($user);
         }
 
         $html .= '</ul></div></div>';
         return $html;
-    }
-
-    private function getMentors() {
-        return get_users([
-            'role' => 'mentor',
-            'orderby' => 'user_registered',
-            'order' => 'ASC'
-        ]);
     }
 
     private function getMentorHTML($user) {
