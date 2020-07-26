@@ -5,10 +5,11 @@ if (!defined('ABSPATH')) {
 
 class VamMentorDetails {
     private $enqueueHandleName = "vammentor-details";
-    private $userId;
-    
+    private $userInfo;
+
     function __construct() {
-        $this->userId = $this->getUserId();
+        $userId = $this->getUserId();
+        $this->userInfo = $this->getMentorInfo($userId);
     }
 
     private function getUserId() {
@@ -29,29 +30,28 @@ class VamMentorDetails {
     }
 
     public function getTemplate() {
-        $userInfo = $this->getMentorInfo();
-        print_r($userInfo);
-
         $html = "
         <div class='mentor-details'>
-            hihihi    
+            " . $this->getTopLeftBlockHTML() . "
+            " . $this->getBottomLeftBlockHTML() . "
+            " . $this->getRightBlockHTML() . "
         </div>
         ";
 
         return $html;
     }
 
-    private function getMentorInfo() {
+    private function getMentorInfo($userId) {
         $mentors = $this->getMentors();
 
         foreach($mentors as $mentor) {
-            if ($mentor->ID === $this->userId) {
+            if ($mentor->ID === $userId) {
                 $userMetaData = get_user_meta($mentor->ID);
 
-                return [
+                $userInfo = [
                     "id" => $mentor->ID,
                     "avatar" => get_avatar_url($mentor->user_email),
-                    "display_name" => $mentor->display_name,
+                    "name" => $mentor->display_name,
                     "company" => $userMetaData["company"][0],
                     "title" => $userMetaData["title"][0],
                     "email" => $mentor->user_email,
@@ -65,10 +65,11 @@ class VamMentorDetails {
                     "hobbies" => $userMetaData["hobbies"][0],
                     "mentoring_program" => $userMetaData["mentoring_program"][0],
                 ];
+
+                return (object) $userInfo;
             }
         }
 
-        echo "cannot find user";
         return [];
     }
 
@@ -78,5 +79,37 @@ class VamMentorDetails {
             'orderby' => 'user_registered',
             'order' => 'ASC'
         ]);
+    }
+
+    private function getTopLeftBlockHTML() {
+        $avatarUrl = $this->userInfo->avatar;
+        $html = 
+        "<div class='mentor-details__top-left'>
+            <img class='mentor-details__avatar' src='$avatarUrl' alt='Avatar' />
+        </div>";
+        return $html;
+    }
+
+
+    private function getBottomLeftBlockHTML() {
+        $userInfo = $this->userInfo;
+
+        $html = 
+        "<div class='mentor-details__bottom-left'>
+            <h5 class='mentor-details__heading'>$userInfo->name</h5>
+            <p>$userInfo->title</p>
+            <p><strong>$userInfo->company</strong></p>
+
+            <div class='mentor-details__line'></div>
+
+            <p>E: $userInfo->email</p>
+            <p>M: $userInfo->phone</p>
+        </div>";
+        return $html;
+    }
+
+    private function getRightBlockHTML() {
+        $html = "<div class='mentor-details__right'>right</div>";
+        return $html;
     }
 }
