@@ -102,10 +102,28 @@ class VamMentorDetails {
 
             <div class='mentor-details__line'></div>
 
-            <p>E: $userInfo->email</p>
-            <p>M: $userInfo->phone</p>
+            " . $this->getContactInfoRow($this->getEmailIcon(), $userInfo->email) . "
+            " . $this->getContactInfoRow($this->getPhoneIcon(), $userInfo->phone) . "
         </div>";
         return $html;
+    }
+
+    private function getContactInfoRow($icon, $value) {
+        return 
+        "<p class='mentor-details__contact-info'>
+            {$icon}
+            <span>: {$value}</span>
+        </p>";
+    }    
+
+    private function getEmailIcon() {
+        $iconUrl = DIR_PLUGIN . "/assets/svg/email.svg";
+        return "<img src='$iconUrl' class='mentor-details__icon' />";
+    }
+
+    private function getPhoneIcon() {
+        $iconUrl = DIR_PLUGIN . "/assets/svg/mobile.svg";
+        return "<img src='$iconUrl' class='mentor-details__icon' />";
     }
 
     private function getRightBlockHTML() {
@@ -122,6 +140,7 @@ class VamMentorDetails {
             " . $this->getRightBlockRowHTML("Sở thích", $userInfo->hobbies) . "
             " . $this->getRightBlockRowHTML("Chương trình mentoring", $userInfo->mentoring_program) . "
         </div>";
+
         return $html;
     }
 

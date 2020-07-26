@@ -17,6 +17,7 @@
 
 .mentor-details p {
   margin: 0;
+  margin-bottom: 3px;
   padding: 0;
 }
 
@@ -49,6 +50,20 @@
   width: 150px;
   border-top: 1px solid black;
   content: "";
+}
+
+.mentor-details__contact-info {
+  display: flex;
+  align-items: center;
+}
+
+.mentor-details__icon {
+  width: 20px;
+  height: 20px;
+}
+
+.mentor-details__icon::after {
+  content: "wtf bro";
 }
 
 .mentor-details__right {
