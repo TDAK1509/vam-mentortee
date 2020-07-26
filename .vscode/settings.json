@@ -1,3 +1,5 @@
 {
-  "php.suggest.basic": false
+  "php.suggest.basic": false,
+  "csscomb.preset": "zen",
+  "csscomb.formatOnSave": true
 }
