@@ -5,6 +5,7 @@ if (!defined('ABSPATH')) {
 
 require_once "mentor-admin.php";
 require_once "mentor-view.php";
+require_once "mentor-details.php";
 
 class VamMain {
   function __construct() {
@@ -15,6 +16,10 @@ class VamMain {
     if ($this->isMentorListPage() === true) {
       VamMentorView::init();
     }
+
+    if ($this->isMentorDetailsPage() === true) {
+      VamMentorDetails::init();
+    }
   }
 
   private function isAdminPage() {
@@ -23,6 +28,10 @@ class VamMain {
 
   private function isMentorListPage() {
     return $this->isPageUriContainingWord("/mentor-list");
+  }
+
+  private function isMentorDetailsPage() {
+    return $this->isPageUriContainingWord("/mentor-details");
   }
 
   private function isPageUriContainingWord($word) {
