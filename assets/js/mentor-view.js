@@ -17,12 +17,20 @@ jQuery(document).ready(function () {
 });
 
 function getMentorsByMentoringProgram(mentoringProgram) {
+  if (!mentoringProgram) {
+    return phpMentors;
+  }
+
   return phpMentors.filter(
     (mentor) => mentor.mentoring_program === mentoringProgram
   );
 }
 
 function getMentorsByExpertise(expertise) {
+  if (!expertise) {
+    return phpMentors;
+  }
+
   return phpMentors.filter((mentor) => mentor.expertise === expertise);
 }
 

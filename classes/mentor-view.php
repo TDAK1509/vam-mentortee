@@ -142,7 +142,7 @@ class VamMentorView {
         $json = file_get_contents(DIR_PLUGIN . "/json/career_field_expertise.json");
         $jsonToArray = (array) json_decode($json);
         return $jsonToArray;
-      }
+    }
 
     private function getMentorHTML($mentor) {
         $mentorDetailsPage = $_SERVER['REQUEST_URI'] . $mentor["id"] . "/";
