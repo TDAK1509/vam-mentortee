@@ -91,4 +91,9 @@
     grid-template-columns: 1fr;
     row-gap: 10px;
   }
+
+  .mentor-details__top-left {
+    margin-top: 20px;
+    text-align: center;
+  }
 }
