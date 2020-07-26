@@ -9,9 +9,10 @@
 
   grid-template-areas:
     "top-left right"
-    "bottom-left right";
+    "bottom-left right"
+    ". right";
   grid-template-columns: auto 1fr;
-  row-gap: 20px;
+  row-gap: 10px;
 }
 
 .mentor-details p {
@@ -43,7 +44,7 @@
 }
 
 .mentor-details__line {
-  margin-top: 20px;
+  margin-top: 15px;
   margin-bottom: 10px;
   width: 150px;
   border-top: 1px solid black;
@@ -52,4 +53,14 @@
 
 .mentor-details__right {
   grid-area: right;
+}
+
+.mentor-details__right-row:not(:first-child) {
+  margin-top: 20px !important;
+}
+
+.mentor-details__right-title {
+  color: #007db2;
+  font-weight: 700;
+  font-size: 13pt;
 }

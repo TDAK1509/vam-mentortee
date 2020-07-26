@@ -56,7 +56,7 @@ class VamMentorDetails {
                     "title" => $userMetaData["title"][0],
                     "email" => $mentor->user_email,
                     "phone" => $userMetaData["phone"][0],
-                    "biography" => $userMetaData["biography"][0],
+                    "biography" => $userMetaData["description"][0],
                     "year_of_experience" => $userMetaData["year_of_experience"][0],
                     "degree" => $userMetaData["degree"][0],
                     "career_field" => $userMetaData["career_field"][0],
@@ -109,7 +109,29 @@ class VamMentorDetails {
     }
 
     private function getRightBlockHTML() {
-        $html = "<div class='mentor-details__right'>right</div>";
+        $userInfo = $this->userInfo;
+
+        $html = 
+        "<div class='mentor-details__right'>
+            " . $this->getRightBlockRowHTML("Tiểu sử", $userInfo->biography) . "
+            " . $this->getRightBlockRowHTML("Số năm kinh nghiệm", $userInfo->year_of_experience) . "
+            " . $this->getRightBlockRowHTML("Trình độ học vấn", $userInfo->degree) . "
+            " . $this->getRightBlockRowHTML("Lĩnh vực nghề nghiệp", $userInfo->career_field) . "
+            " . $this->getRightBlockRowHTML("Chuyên môn", $userInfo->expertise) . "
+            " . $this->getRightBlockRowHTML("Chủ đề chia sẻ", $userInfo->topics) . "
+            " . $this->getRightBlockRowHTML("Sở thích", $userInfo->hobbies) . "
+            " . $this->getRightBlockRowHTML("Chương trình mentoring", $userInfo->mentoring_program) . "
+        </div>";
+        return $html;
+    }
+
+    private function getRightBlockRowHTML($title, $content) {
+        $html =
+        "<div class='mentor-details__right-row'>
+            <p class='mentor-details__right-title'>$title</p>
+            <p>$content</p>
+        </div>";
+
         return $html;
     }
 }
