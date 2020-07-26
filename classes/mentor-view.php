@@ -145,7 +145,9 @@ class VamMentorView {
     }
 
     private function getMentorHTML($mentor) {
-        $mentorDetailsPage = $_SERVER['REQUEST_URI'] . $mentor["id"] . "/";
+        $pageUri = $_SERVER['REQUEST_URI'];
+        $mentorDetailsPage = preg_replace('/mentor-list/', "mentor-details", $pageUri);
+        $mentorDetailsPageWithUserId = "{$mentorDetailsPage}{$mentor['id']}/";
         
         return "
         <li class='mentor-view__list-item'>
@@ -155,7 +157,7 @@ class VamMentorView {
             <p><strong>" . $mentor['title'] . "</strong></p>
             <p class='mentor-view__topics'><strong>Chuyên ngành:</strong> " . $mentor['expertise'] . "<p>
             <div class='mentor-view__button-container'>
-                <a class='mentor-view__button-more-details' href='$mentorDetailsPage'>Xem hồ sơ</a>
+                <a class='mentor-view__button-more-details' href='$mentorDetailsPageWithUserId'>Xem hồ sơ</a>
             </div>
         </li>";
     }
