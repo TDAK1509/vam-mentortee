@@ -79,3 +79,16 @@
   font-weight: 700;
   font-size: 13pt;
 }
+
+@media screen and (max-width: 600px) {
+  .mentor-details {
+    column-gap: 0px;
+
+    grid-template-areas:
+      "top-left"
+      "bottom-left"
+      "right";
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+  }
+}
