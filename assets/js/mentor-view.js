@@ -1,37 +1,40 @@
+let selectedProgram = "";
+let selectedExpertise = "";
+
 jQuery(document).ready(function () {
   const mentoringProgramsSelect = jQuery("#mentoring_programs");
   const expertisesSelect = jQuery("#expertises");
   const mentorListDOM = jQuery("#mentor-list");
 
   mentoringProgramsSelect.on("change", (event) => {
-    const selectedProgram = event.target.value;
-    const filteredMentors = getMentorsByMentoringProgram(selectedProgram);
+    selectedProgram = event.target.value;
+    const filteredMentors = filterMentors();
     mentorListDOM.html(getMentorListHtml(filteredMentors));
   });
 
   expertisesSelect.on("change", (event) => {
-    const selectedExpertise = event.target.value;
-    const filteredMentors = getMentorsByExpertise(selectedExpertise);
+    selectedExpertise = event.target.value;
+    const filteredMentors = filterMentors();
     mentorListDOM.html(getMentorListHtml(filteredMentors));
   });
 });
 
-function getMentorsByMentoringProgram(mentoringProgram) {
-  if (!mentoringProgram) {
-    return phpMentors;
+function filterMentors() {
+  let filteredMentors = phpMentors;
+
+  if (selectedProgram) {
+    filteredMentors = filteredMentors.filter(
+      (mentor) => mentor.mentoring_program === selectedProgram
+    );
   }
 
-  return phpMentors.filter(
-    (mentor) => mentor.mentoring_program === mentoringProgram
-  );
-}
-
-function getMentorsByExpertise(expertise) {
-  if (!expertise) {
-    return phpMentors;
+  if (selectedExpertise) {
+    filteredMentors = filteredMentors.filter(
+      (mentor) => mentor.expertise === selectedExpertise
+    );
   }
 
-  return phpMentors.filter((mentor) => mentor.expertise === expertise);
+  return filteredMentors;
 }
 
 function getMentorListHtml(mentors) {
