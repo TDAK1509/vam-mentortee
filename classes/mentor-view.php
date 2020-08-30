@@ -148,7 +148,7 @@ class VamMentorView {
     private function getMentorHTML($mentor) {
         $pageUri = $_SERVER['REQUEST_URI'];
         $mentorDetailsPage = preg_replace('/mentor-list/', "mentor-details", $pageUri);
-        $mentorDetailsPageWithUserId = "{$mentorDetailsPage}{$mentor['id']}/";
+        $mentorDetailsPageWithUserId = "{$mentorDetailsPage}?id={$mentor['id']}/";
         
         return "
         <li class='mentor-view__list-item'>

@@ -13,10 +13,7 @@ class VamMentorDetails {
     }
 
     private function getUserId() {
-        $regex = "/mentor-details\/([0-9]+)\//";
-        $pageUri = $_SERVER['REQUEST_URI'];
-        preg_match($regex, $pageUri, $matches);
-        return intval($matches[1]);
+        return (int) $_GET["id"];
     }
 
     public static function init() {
