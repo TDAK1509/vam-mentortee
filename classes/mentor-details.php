@@ -47,10 +47,11 @@ class VamMentorDetails {
         foreach($mentors as $mentor) {
             if ($mentor->ID === $userId) {
                 $userMetaData = get_user_meta($mentor->ID);
+                $avatar = get_avatar_url($mentor->user_email, ["size" => 215]);
 
                 $userInfo = [
                     "id" => $mentor->ID,
-                    "avatar" => get_avatar_url($mentor->user_email),
+                    "avatar" => $avatar,
                     "name" => $mentor->display_name,
                     "company" => $userMetaData["company"][0],
                     "title" => $userMetaData["title"][0],
