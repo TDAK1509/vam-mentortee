@@ -91,19 +91,28 @@ class VamMentorDetails {
 
     private function getBottomLeftBlockHTML() {
         $userInfo = $this->userInfo;
+        $emailPhoneHtml = "";
+        
+
+        if ($this->userIsAdmin()) {
+            $dividerHtml = "<div class='mentor-details__line'></div>";
+            $emailHtml = $this->getContactInfoRow($this->getEmailIcon(), $userInfo->email);
+            $phoneHtml = $this->getContactInfoRow($this->getPhoneIcon(), $userInfo->phone);
+            $emailPhoneHtml = $dividerHtml . $emailHtml . $phoneHtml;
+        }
 
         $html = 
         "<div class='mentor-details__bottom-left'>
             <h5 class='mentor-details__heading'>$userInfo->name</h5>
             <p>$userInfo->title</p>
             <p><strong>$userInfo->company</strong></p>
-
-            <div class='mentor-details__line'></div>
-
-            " . $this->getContactInfoRow($this->getEmailIcon(), $userInfo->email) . "
-            " . $this->getContactInfoRow($this->getPhoneIcon(), $userInfo->phone) . "
+            $emailPhoneHtml
         </div>";
         return $html;
+    }
+
+    private function userIsAdmin() {
+        return current_user_can('administrator');
     }
 
     private function getContactInfoRow($icon, $value) {
