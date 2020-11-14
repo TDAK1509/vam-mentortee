@@ -157,6 +157,7 @@ class VamMentorView {
             <p><strong>" . $mentor['company'] . "</strong></p>
             <p><strong>" . $mentor['title'] . "</strong></p>
             <p class='mentor-view__topics'><strong>Chuyên ngành:</strong> " . $mentor['expertise'] . "<p>
+            <div style='flex: 1;'></div>
             <div class='mentor-view__button-container'>
                 <a class='mentor-view__button-more-details' href='$mentorDetailsPageWithUserId'>Xem hồ sơ</a>
             </div>
