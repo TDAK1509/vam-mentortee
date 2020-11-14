@@ -46,9 +46,13 @@
 }
 
 .mentor-view__list {
+  display: grid;
   margin: 0;
   padding: 0;
   list-style: none;
+  column-gap: 20px;
+
+  grid-template-columns: 1fr 1fr;
 }
 
 .mentor-view__list-item {
@@ -123,9 +127,6 @@
   }
 
   .mentor-view__list {
-    display: grid;
-    column-gap: 20px;
-
     grid-template-columns: 1fr 1fr 1fr;
   }
 
