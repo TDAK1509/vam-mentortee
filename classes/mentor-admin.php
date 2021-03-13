@@ -25,9 +25,11 @@ class VamMentorAdmin {
 
     // Add extra fields to user profile form
     add_action( 'show_user_profile', [$self, 'addExtraProfileFields'] );
+    add_action( 'edit_user_profile', [$self, 'addExtraProfileFields'] );
 
     // Update extra fields on user update
     add_action('personal_options_update', [$self, 'updateExtraProfileFields']);
+    add_action('edit_user_profile_update', [$self, 'updateExtraProfileFields']);
 
     // Add user role
     add_action('init', [$self, 'addUserRole']);    
@@ -55,7 +57,7 @@ class VamMentorAdmin {
   }
 
   public function addExtraProfileFields(WP_User $user) {
-    if (!$this->userIsMentor()) {
+    if (!$this->userIsAdmin() && !$this->userIsMentor()) {
       return;
     }
 
@@ -63,6 +65,7 @@ class VamMentorAdmin {
     <h2>Mentor profile</h2>
     <table class="form-table" role="presentation">
       <tbody>
+        ' . $this->getAvatarUploadField() . '
         ' . $this->getRadioFieldHTML("Gender", "gender", $this->getGenderData()) . '
         ' . $this->getTextFieldHTML("Company", "company", $this->getFieldValueFromServer("company")) . '
         ' . $this->getTextFieldHTML("Title", "title", $this->getFieldValueFromServer("title")) . '
@@ -79,6 +82,20 @@ class VamMentorAdmin {
         ' . $this->getSelectFieldHTML("Expertise", "expertise") . '
       </tbody>
     </table>';
+  }
+
+  private function getAvatarUploadField() {
+    $defaultAvatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ0WPascJHnRmamqyCeLDVPaWxuVCkuHeqRw&usqp=CAU";
+    $avatar = $this->getFieldValueFromServer("vam_avatar") ?: $defaultAvatar;
+    return '
+      <tr>
+        <th><label for="vam_avatar">VAM Avatar</label></th>
+        <td>
+          <img src="' . $avatar . '" width="50px" height="auto" style="object-fit: cover;" />
+          <input type="file" name="vam_avatar" id="vam_avatar" />
+        </td>
+      </tr>
+    ';
   }
 
   private function getRadioFieldHTML($label, $name, $radios) {
@@ -299,7 +316,17 @@ class VamMentorAdmin {
   }
 
   private function getFieldValueFromServer($fieldName) {
-    return get_user_meta(get_current_user_id(), $fieldName, true);
+    $userId = get_current_user_id();
+
+    if ($this->userIsAdmin()) {
+      $userId = $_GET["user_id"];
+    }
+
+    return get_user_meta($userId, $fieldName, true);
+  }
+
+  private function userIsAdmin() {
+    return current_user_can('administrator');
   }
 
   private function userIsMentor() {
@@ -312,6 +339,11 @@ class VamMentorAdmin {
     if (!current_user_can('edit_user', $userId)) {
       return;
     }
+
+    // Avatar
+    $attachment_id = media_handle_upload('vam_avatar', 0);
+    $image_url = wp_get_attachment_url($attachment_id);
+    update_user_meta($userId, 'vam_avatar', $image_url);
 
     // Radio fields
     update_user_meta($userId, 'gender', $_REQUEST['gender'] !== "" ? $_REQUEST['gender'] : $_REQUEST['gender_other']);

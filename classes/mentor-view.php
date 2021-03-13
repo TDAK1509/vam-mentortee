@@ -37,10 +37,11 @@ class VamMentorView {
     private function getMentorsInfo() {
         $mentors = $this->getMentors();
         $mentorsInfo = [];
+        $defaultAvatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ0WPascJHnRmamqyCeLDVPaWxuVCkuHeqRw&usqp=CAU";
 
         foreach($mentors as $mentor) {
             $userMetaData = get_user_meta($mentor->ID);
-            $avatar = get_avatar_url($mentor->user_email, ["size" => 215]);
+            $avatar = $userMetaData["vam_avatar"][0] ?: $defaultAvatar;
 
             $mentorInfo = [
                 "id" => $mentor->ID,
@@ -149,7 +150,7 @@ class VamMentorView {
         $pageUri = $_SERVER['REQUEST_URI'];
         $mentorDetailsPage = preg_replace('/mentor-list/', "mentor-details", $pageUri);
         $mentorDetailsPageWithUserId = "{$mentorDetailsPage}?id={$mentor['id']}/";
-        
+
         return "
         <li class='mentor-view__list-item'>
             <img class='mentor-view__avatar' src='" . $mentor["avatar"] . "' />
