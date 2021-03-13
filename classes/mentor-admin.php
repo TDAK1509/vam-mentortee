@@ -29,6 +29,7 @@ class VamMentorAdmin {
 
     // Update extra fields on user update
     add_action('personal_options_update', [$self, 'updateExtraProfileFields']);
+    add_action('edit_user_profile_update', [$self, 'updateExtraProfileFields']);
 
     // Add user role
     add_action('init', [$self, 'addUserRole']);    
@@ -56,7 +57,7 @@ class VamMentorAdmin {
   }
 
   public function addExtraProfileFields(WP_User $user) {
-    if (!$this->userIsMentor()) {
+    if (!$this->userIsAdmin() && !$this->userIsMentor()) {
       return;
     }
 
@@ -313,7 +314,13 @@ class VamMentorAdmin {
   }
 
   private function getFieldValueFromServer($fieldName) {
-    return get_user_meta(get_current_user_id(), $fieldName, true);
+    $userId = get_current_user_id();
+
+    if ($this->userIsAdmin()) {
+      $userId = $_GET["user_id"];
+    }
+
+    return get_user_meta($userId, $fieldName, true);
   }
 
   private function userIsAdmin() {
@@ -334,7 +341,7 @@ class VamMentorAdmin {
     // Avatar
     $attachment_id = media_handle_upload('vam_avatar', 0);
     $image_url = wp_get_attachment_url($attachment_id);
-    update_user_meta($userId, 'vam_avatar', "hehe");
+    update_user_meta($userId, 'vam_avatar', "zzz");
 
     // Radio fields
     update_user_meta($userId, 'gender', $_REQUEST['gender'] !== "" ? $_REQUEST['gender'] : $_REQUEST['gender_other']);
