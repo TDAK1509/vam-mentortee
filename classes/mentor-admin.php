@@ -64,6 +64,7 @@ class VamMentorAdmin {
     <h2>Mentor profile</h2>
     <table class="form-table" role="presentation">
       <tbody>
+        ' . $this->getAvatarUploadField() . '
         ' . $this->getRadioFieldHTML("Gender", "gender", $this->getGenderData()) . '
         ' . $this->getTextFieldHTML("Company", "company", $this->getFieldValueFromServer("company")) . '
         ' . $this->getTextFieldHTML("Title", "title", $this->getFieldValueFromServer("title")) . '
@@ -80,6 +81,18 @@ class VamMentorAdmin {
         ' . $this->getSelectFieldHTML("Expertise", "expertise") . '
       </tbody>
     </table>';
+  }
+
+  private function getAvatarUploadField() {
+    return '
+      <tr>
+        <td>VAM Avatar</td>
+        <td>
+          ' . $this->getFieldValueFromServer("vam_avatar") . '
+          <input type="file" name="vam_avatar" />
+        </td>
+      </tr>
+    ';
   }
 
   private function getRadioFieldHTML($label, $name, $radios) {
@@ -317,6 +330,11 @@ class VamMentorAdmin {
     if (!current_user_can('edit_user', $userId)) {
       return;
     }
+
+    // Avatar
+    // $attachment_id = media_handle_upload('vam_avatar', 0);
+    // $image_url = wp_get_attachment_url($attachment_id);
+    update_user_meta($userId, 'vam_avatar', "haha");
 
     // Radio fields
     update_user_meta($userId, 'gender', $_REQUEST['gender'] !== "" ? $_REQUEST['gender'] : $_REQUEST['gender_other']);

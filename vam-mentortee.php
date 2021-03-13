@@ -19,4 +19,3 @@ require_once "classes/main.php";
 $main = new VamMain();
 
 register_activation_hook(__FILE__, [$main, 'activate']);
-
