@@ -85,12 +85,14 @@ class VamMentorAdmin {
   }
 
   private function getAvatarUploadField() {
+    $defaultAvatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ0WPascJHnRmamqyCeLDVPaWxuVCkuHeqRw&usqp=CAU";
+    $avatar = $this->getFieldValueFromServer("vam_avatar") ?: $defaultAvatar;
     return '
       <tr>
-        <td>VAM Avatar</td>
+        <th><label for="vam_avatar">VAM Avatar</label></th>
         <td>
-          ' . $this->getFieldValueFromServer("vam_avatar") . '
-          <input type="file" name="vam_avatar" />
+          <img src="' . $avatar . '" width="50px" height="auto" style="object-fit: cover;" />
+          <input type="file" name="vam_avatar" id="vam_avatar" />
         </td>
       </tr>
     ';
