@@ -56,9 +56,9 @@ class VamMentorAdmin {
   }
 
   public function addExtraProfileFields(WP_User $user) {
-    // if (!$this->userIsMentor()) {
-    //   return;
-    // }
+    if (!$this->userIsMentor()) {
+      return;
+    }
 
     echo '
     <h2>Mentor profile</h2>
@@ -332,9 +332,9 @@ class VamMentorAdmin {
     }
 
     // Avatar
-    // $attachment_id = media_handle_upload('vam_avatar', 0);
-    // $image_url = wp_get_attachment_url($attachment_id);
-    update_user_meta($userId, 'vam_avatar', "haha");
+    $attachment_id = media_handle_upload('vam_avatar', 0);
+    $image_url = wp_get_attachment_url($attachment_id);
+    update_user_meta($userId, 'vam_avatar', "hehe");
 
     // Radio fields
     update_user_meta($userId, 'gender', $_REQUEST['gender'] !== "" ? $_REQUEST['gender'] : $_REQUEST['gender_other']);
