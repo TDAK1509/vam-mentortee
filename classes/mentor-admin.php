@@ -341,7 +341,7 @@ class VamMentorAdmin {
     // Avatar
     $attachment_id = media_handle_upload('vam_avatar', 0);
     $image_url = wp_get_attachment_url($attachment_id);
-    update_user_meta($userId, 'vam_avatar', "zzz");
+    update_user_meta($userId, 'vam_avatar', $image_url);
 
     // Radio fields
     update_user_meta($userId, 'gender', $_REQUEST['gender'] !== "" ? $_REQUEST['gender'] : $_REQUEST['gender_other']);
