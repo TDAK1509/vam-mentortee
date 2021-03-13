@@ -25,6 +25,7 @@ class VamMentorAdmin {
 
     // Add extra fields to user profile form
     add_action( 'show_user_profile', [$self, 'addExtraProfileFields'] );
+    add_action( 'edit_user_profile', [$self, 'addExtraProfileFields'] );
 
     // Update extra fields on user update
     add_action('personal_options_update', [$self, 'updateExtraProfileFields']);
@@ -55,9 +56,9 @@ class VamMentorAdmin {
   }
 
   public function addExtraProfileFields(WP_User $user) {
-    if (!$this->userIsMentor()) {
-      return;
-    }
+    // if (!$this->userIsMentor()) {
+    //   return;
+    // }
 
     echo '
     <h2>Mentor profile</h2>
@@ -300,6 +301,10 @@ class VamMentorAdmin {
 
   private function getFieldValueFromServer($fieldName) {
     return get_user_meta(get_current_user_id(), $fieldName, true);
+  }
+
+  private function userIsAdmin() {
+    return current_user_can('administrator');
   }
 
   private function userIsMentor() {
