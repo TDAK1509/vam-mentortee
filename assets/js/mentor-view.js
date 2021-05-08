@@ -6,13 +6,13 @@ jQuery(document).ready(function () {
   const expertisesSelect = jQuery("#expertises");
   const mentorListDOM = jQuery("#mentor-list");
 
-  mentoringProgramsSelect.on("change", (event) => {
+  mentoringProgramsSelect.on("change", event => {
     selectedProgram = event.target.value;
     const filteredMentors = filterMentors();
     mentorListDOM.html(getMentorListHtml(filteredMentors));
   });
 
-  expertisesSelect.on("change", (event) => {
+  expertisesSelect.on("change", event => {
     selectedExpertise = event.target.value;
     const filteredMentors = filterMentors();
     mentorListDOM.html(getMentorListHtml(filteredMentors));
@@ -24,13 +24,13 @@ function filterMentors() {
 
   if (selectedProgram) {
     filteredMentors = filteredMentors.filter(
-      (mentor) => mentor.mentoring_program === selectedProgram
+      mentor => mentor.mentoring_program === selectedProgram
     );
   }
 
   if (selectedExpertise) {
     filteredMentors = filteredMentors.filter(
-      (mentor) => mentor.expertise === selectedExpertise
+      mentor => mentor.expertise === selectedExpertise
     );
   }
 
@@ -40,7 +40,7 @@ function filterMentors() {
 function getMentorListHtml(mentors) {
   let html = "";
 
-  mentors.forEach((mentor) => {
+  mentors.forEach(mentor => {
     html += getMentorHtml(mentor);
   });
 
@@ -49,10 +49,13 @@ function getMentorListHtml(mentors) {
 
 function getMentorHtml(mentor) {
   return `<li class='mentor-view__list-item'>
-    <img class='mentor-view__avatar' src='${mentor.avatar}' />
-    <h5 class='mentor-view__name'>${mentor.display_name}</h5>
-    <p><strong>${mentor.company}</strong></p>
-    <p><strong>${mentor.title}</strong></p>
-    <p class='mentor-view__topics'><strong>Chuyên ngành:</strong> ${mentor.expertise}<p>
-  </li>`;
+  <a href='$mentorDetailsPageWithUserId'>
+      <img class='mentor-list-item__avatar' src='${mentor.avatar}' />
+  </a>
+  <p class='mentor-list-item__name'>${mentor.display_name}</p>
+  <p class='mentor-list-item__subtitle'>${mentor.title}</p>
+  <p class='mentor-list-item__subtitle'>${mentor.company}</p>
+  <div class='mentor-list-item__divider'></div>
+  <p class='mentor-list-item__topics'><strong>Chuyên ngành:</strong> ${mentor.expertise}<p>
+</li>`;
 }
