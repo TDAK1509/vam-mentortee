@@ -70,22 +70,23 @@ class VamMentorView {
     public function getTemplate() {
         $html = "
         <div class='mentor-view'>
-            <h2 class='mentor-view__heading elementor-heading-title elementor-size-default'>DANH SÁCH MENTOR</h2>
-            <div class='mentor-view__filter-container'>
-                <h4 class='mentor-view__filter-description'>Lọc theo:</h4>
+            <div class='mentor-view__container'>
+                <h2 class='mentor-view__heading elementor-heading-title elementor-size-default'>DANH SÁCH MENTOR</h2>
+                <div class='mentor-view__filter-container'>
+                    <h4 class='mentor-view__filter-description'>Lọc theo:</h4>
 
-                <div class='mentor-view__select-container'>
-                    <select class='mentor-view__select' id='mentoring_programs'>
-                        " . $this->getMentoringProgramOptionsHTML() . "
-                    </select>
-                </div>
+                    <div class='mentor-view__select-container'>
+                        <select class='mentor-view__select' id='mentoring_programs'>
+                            " . $this->getMentoringProgramOptionsHTML() . "
+                        </select>
+                    </div>
 
-                <div class='mentor-view__select-container'>
-                    <select class='mentor-view__select' id='expertises'>
-                        " . $this->getExpertiseOptionsHTML() . "
-                    </select>
+                    <div class='mentor-view__select-container'>
+                        <select class='mentor-view__select' id='expertises'>
+                            " . $this->getExpertiseOptionsHTML() . "
+                        </select>
+                    </div>
                 </div>
-            </div>
         ";
 
         $html .= "<div class='mentor-view__mentors'><ul class='mentor-view__list' id='mentor-list'>";
@@ -94,7 +95,7 @@ class VamMentorView {
             $html .= $this->getMentorHTML($mentor);
         }
 
-        $html .= '</ul></div></div>';
+        $html .= '</ul></div></div></div>';
         return $html;
     }
 

@@ -1,9 +1,15 @@
 .mentor-view {
   margin: auto !important;
   max-width: none !important;
-  text-align: left;
+  text-align: center;
   font-size: 12pt;
   font-family: Arial;
+}
+
+.mentor-view__container {
+  margin: auto;
+  max-width: 960px;
+  text-align: left;
 }
 
 .mentor-view__heading {
