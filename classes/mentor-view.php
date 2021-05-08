@@ -69,24 +69,23 @@ class VamMentorView {
 
     public function getTemplate() {
         $html = "
-        <div class='mentor-view'>
-            <div class='mentor-view__container'>
-                <h2 class='mentor-view__heading elementor-heading-title elementor-size-default'>DANH SÁCH MENTOR</h2>
-                <div class='mentor-view__filter-container'>
-                    <h4 class='mentor-view__filter-description'>Lọc theo:</h4>
+        <div class='mentor-view'>            
+            <h2 class='mentor-view__heading elementor-heading-title elementor-size-default'>DANH SÁCH MENTOR</h2>
+            <div class='mentor-view__filter-container'>
+                <p class='mentor-view__filter-description'>Lọc theo:</p>
 
-                    <div class='mentor-view__select-container'>
-                        <select class='mentor-view__select' id='mentoring_programs'>
-                            " . $this->getMentoringProgramOptionsHTML() . "
-                        </select>
-                    </div>
-
-                    <div class='mentor-view__select-container'>
-                        <select class='mentor-view__select' id='expertises'>
-                            " . $this->getExpertiseOptionsHTML() . "
-                        </select>
-                    </div>
+                <div class='mentor-view__select-container'>
+                    <select class='mentor-view__select' id='mentoring_programs'>
+                        " . $this->getMentoringProgramOptionsHTML() . "
+                    </select>
                 </div>
+
+                <div class='mentor-view__select-container'>
+                    <select class='mentor-view__select' id='expertises'>
+                        " . $this->getExpertiseOptionsHTML() . "
+                    </select>
+                </div>
+            </div>
         ";
 
         $html .= "<div class='mentor-view__mentors'><ul class='mentor-view__list' id='mentor-list'>";
@@ -95,7 +94,7 @@ class VamMentorView {
             $html .= $this->getMentorHTML($mentor);
         }
 
-        $html .= '</ul></div></div></div>';
+        $html .= '</ul></div></div>';
         return $html;
     }
 
@@ -157,7 +156,7 @@ class VamMentorView {
             <a href='$mentorDetailsPageWithUserId'>
                 <img class='mentor-list-item__avatar' src='" . $mentor["avatar"] . "' />
             </a>
-            <h5 class='mentor-list-item__name'>" . $mentor['display_name'] . "</h5>
+            <p class='mentor-list-item__name'>" . $mentor['display_name'] . "</p>
             <p class='mentor-list-item__subtitle'>" . $mentor['title'] . "</p>
             <p class='mentor-list-item__subtitle'>" . $mentor['company'] . "</p>
             <div class='mentor-list-item__divider'></div>
