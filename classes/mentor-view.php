@@ -70,22 +70,23 @@ class VamMentorView {
     public function getTemplate() {
         $html = "
         <div class='mentor-view'>
-            <h2 class='mentor-view__heading elementor-heading-title elementor-size-default'>DANH SÁCH MENTOR</h2>
-            <div class='mentor-view__filter-container'>
-                <h4 class='mentor-view__filter-description'>Lọc theo:</h4>
+            <div class='mentor-view__container'>
+                <h2 class='mentor-view__heading elementor-heading-title elementor-size-default'>DANH SÁCH MENTOR</h2>
+                <div class='mentor-view__filter-container'>
+                    <h4 class='mentor-view__filter-description'>Lọc theo:</h4>
 
-                <div class='mentor-view__select-container'>
-                    <select class='mentor-view__select' id='mentoring_programs'>
-                        " . $this->getMentoringProgramOptionsHTML() . "
-                    </select>
-                </div>
+                    <div class='mentor-view__select-container'>
+                        <select class='mentor-view__select' id='mentoring_programs'>
+                            " . $this->getMentoringProgramOptionsHTML() . "
+                        </select>
+                    </div>
 
-                <div class='mentor-view__select-container'>
-                    <select class='mentor-view__select' id='expertises'>
-                        " . $this->getExpertiseOptionsHTML() . "
-                    </select>
+                    <div class='mentor-view__select-container'>
+                        <select class='mentor-view__select' id='expertises'>
+                            " . $this->getExpertiseOptionsHTML() . "
+                        </select>
+                    </div>
                 </div>
-            </div>
         ";
 
         $html .= "<div class='mentor-view__mentors'><ul class='mentor-view__list' id='mentor-list'>";
@@ -94,7 +95,7 @@ class VamMentorView {
             $html .= $this->getMentorHTML($mentor);
         }
 
-        $html .= '</ul></div></div>';
+        $html .= '</ul></div></div></div>';
         return $html;
     }
 
@@ -153,15 +154,14 @@ class VamMentorView {
 
         return "
         <li class='mentor-view__list-item'>
-            <img class='mentor-view__avatar' src='" . $mentor["avatar"] . "' />
-            <h5 class='mentor-view__name'>" . $mentor['display_name'] . "</h5>
-            <p><strong>" . $mentor['company'] . "</strong></p>
-            <p><strong>" . $mentor['title'] . "</strong></p>
-            <p class='mentor-view__topics'><strong>Chuyên ngành:</strong> " . $mentor['expertise'] . "<p>
-            <div style='flex: 1;'></div>
-            <div class='mentor-view__button-container'>
-                <a class='mentor-view__button-more-details' href='$mentorDetailsPageWithUserId'>Xem hồ sơ</a>
-            </div>
+            <a href='$mentorDetailsPageWithUserId'>
+                <img class='mentor-list-item__avatar' src='" . $mentor["avatar"] . "' />
+            </a>
+            <h5 class='mentor-list-item__name'>" . $mentor['display_name'] . "</h5>
+            <p class='mentor-list-item__subtitle'>" . $mentor['title'] . "</p>
+            <p class='mentor-list-item__subtitle'>" . $mentor['company'] . "</p>
+            <div class='mentor-list-item__divider'></div>
+            <p class='mentor-list-item__topics'><strong>Chuyên ngành:</strong> " . $mentor['expertise'] . "<p>
         </li>";
     }
 }
