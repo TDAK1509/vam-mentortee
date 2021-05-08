@@ -9,7 +9,9 @@
 }
 
 .mentor-view__container {
+  box-sizing: border-box;
   margin: auto;
+  padding: 1em;
   max-width: 960px;
 }
 
@@ -143,7 +145,7 @@
   font-size: 1rem !important;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 700px) {
   .mentor-view__heading {
     margin-top: 10px !important;
     margin-bottom: 20px !important;
@@ -151,7 +153,7 @@
   }
 
   .mentor-view__list {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 
   .mentor-view__filter-container {
@@ -173,12 +175,6 @@
   .mentor-view__list {
     column-gap: 30px;
 
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .mentor-view__list {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   }
 }
