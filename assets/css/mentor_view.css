@@ -38,7 +38,7 @@
   border-radius: 5px;
   background: url("../svg/arrow_down.svg") no-repeat right var(--clr-primary);
   background-position-x: 100%;
-  color: #fff;
+  color: #fff !important;
   font-size: 11pt;
 
   -webkit-appearance: none;
