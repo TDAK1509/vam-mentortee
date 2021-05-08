@@ -126,25 +126,6 @@
   background: var(--clr-primary);
 }
 
-.mentor-list-item__button-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 18px;
-  width: 100%;
-}
-
-.mentor-list-item__button-more-details {
-  flex: 1;
-  padding: 8px;
-  background: var(--clr-primary);
-  color: #fff;
-  text-align: center;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 1rem !important;
-}
-
 @media screen and (min-width: 700px) {
   .mentor-view__heading {
     margin-top: 10px !important;
