@@ -154,14 +154,15 @@ class VamMentorView {
 
         return "
         <li class='mentor-view__list-item'>
-            <img class='mentor-view__avatar' src='" . $mentor["avatar"] . "' />
-            <h5 class='mentor-view__name'>" . $mentor['display_name'] . "</h5>
-            <p><strong>" . $mentor['company'] . "</strong></p>
-            <p><strong>" . $mentor['title'] . "</strong></p>
-            <p class='mentor-view__topics'><strong>Chuyên ngành:</strong> " . $mentor['expertise'] . "<p>
+            <img class='mentor-list-item__avatar' src='" . $mentor["avatar"] . "' />
+            <h5 class='mentor-list-item__name'>" . $mentor['display_name'] . "</h5>
+            <p class='mentor-list-item__subtitle'>" . $mentor['company'] . "</p>
+            <p class='mentor-list-item__subtitle'>" . $mentor['title'] . "</p>
+            <div class='mentor-list-item__divider'></div>
+            <p class='mentor-list-item__topics'><strong>Chuyên ngành:</strong> " . $mentor['expertise'] . "<p>
             <div style='flex: 1;'></div>
-            <div class='mentor-view__button-container'>
-                <a class='mentor-view__button-more-details' href='$mentorDetailsPageWithUserId'>Xem hồ sơ</a>
+            <div class='mentor-list-item__button-container'>
+                <a class='mentor-list-item__button-more-details' href='$mentorDetailsPageWithUserId'>Xem hồ sơ</a>
             </div>
         </li>";
     }
