@@ -21,12 +21,12 @@ class VamMentorView {
     }
 
     public function importCss() {
-        wp_enqueue_style($this->enqueueHandleName, DIR_PLUGIN . "/assets/css/mentor_view.css");
+        wp_enqueue_style($this->enqueueHandleName, DIR_PLUGIN . "/assets/css/mentor_view.css", [], "1.0");
     }
 
     public function importJs() {
         wp_enqueue_script("jquery");
-        wp_enqueue_script($this->enqueueHandleName, DIR_PLUGIN . "/assets/js/mentor-view.js", [], false, true);
+        wp_enqueue_script($this->enqueueHandleName, DIR_PLUGIN . "/assets/js/mentor-view.js", [], "1.0", true);
         $this->sendDataToUseInJavascriptFiles();
     }
 
