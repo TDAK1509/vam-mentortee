@@ -156,8 +156,8 @@ class VamMentorView {
         <li class='mentor-view__list-item'>
             <img class='mentor-list-item__avatar' src='" . $mentor["avatar"] . "' />
             <h5 class='mentor-list-item__name'>" . $mentor['display_name'] . "</h5>
-            <p class='mentor-list-item__subtitle'>" . $mentor['company'] . "</p>
             <p class='mentor-list-item__subtitle'>" . $mentor['title'] . "</p>
+            <p class='mentor-list-item__subtitle'>" . $mentor['company'] . "</p>
             <div class='mentor-list-item__divider'></div>
             <p class='mentor-list-item__topics'><strong>Chuyên ngành:</strong> " . $mentor['expertise'] . "<p>
             <div style='flex: 1;'></div>
