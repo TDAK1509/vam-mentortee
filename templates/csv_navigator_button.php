@@ -13,5 +13,25 @@ if (isset($_FILES)) {
 
   $csvAsArray = array_map('str_getcsv', file($tmpName));
   var_dump($csvAsArray);
+
+  try {
+    createUser();
+    echo "USER created";
+  } catch (Exception $e) {
+      echo 'Error creating user: ',  $e->getMessage(), "\n";
+  }
+
+}
+
+function createUser() {
+  $username = 'admin';
+	$password = 'password';
+	$email_address = 'webmaster@mydomain.com';
+
+	if ( ! username_exists( $username ) ) {
+		$user_id = wp_create_user( $username, $password, $email_address );
+		$user = new WP_User( $user_id );
+		$user->set_role( 'mentor' );
+	}
 }
 ?>
