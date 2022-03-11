@@ -32,7 +32,10 @@ class VamMentorAdmin {
     add_action('edit_user_profile_update', [$self, 'updateExtraProfileFields']);
 
     // Add user role
-    add_action('init', [$self, 'addUserRole']);    
+    add_action('init', [$self, 'addUserRole']);
+
+    // Add CSV to admin sidebar
+    add_action('admin_menu', [$self, 'add_upload_csv_navigator']);
   }
 
   public function importCss() {
@@ -364,5 +367,21 @@ class VamMentorAdmin {
     update_user_meta($userId, 'mentoring_program', $_REQUEST['mentoring_program']);
     update_user_meta($userId, 'career_field', $_REQUEST['career_field']);
     update_user_meta($userId, 'expertise', $_REQUEST['expertise']);
+  }
+
+  public function add_upload_csv_navigator() {
+    add_menu_page(
+      "VamMentorAdmin",
+      "Tạo Mentors bằng CSV",
+      "manage_options",
+      "upload_mentor_csv",
+      [$this, "get_upload_csv_html"],
+      "dashicons-upload",
+      110,
+    );
+  }
+
+  public function get_upload_csv_html() {
+
   }
 }
