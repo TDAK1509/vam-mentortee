@@ -382,6 +382,6 @@ class VamMentorAdmin {
   }
 
   public function get_upload_csv_html() {
-
+    require_once plugin_dir_path(__FILE__) . '../templates/csv_navigator_button.php';
   }
 }
