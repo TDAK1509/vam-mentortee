@@ -1,8 +1,8 @@
 <h1>TẠO MENTOR BẰNG FILE CSV</h1>
 
 <form method="POST" action="<?php echo admin_url( 'admin.php' ) . '?page=upload_mentor_csv'; ?>" enctype="multipart/form-data">
-  <input type="file" name="mentor_csv" />
-  <button class="mentor-csv__button">Tải</button>
+  <p><input type="file" name="mentor_csv" /></p>
+  <p><input type="submit" class="button" value="Tạo Users"></p>
 </form>
 
 <?php
