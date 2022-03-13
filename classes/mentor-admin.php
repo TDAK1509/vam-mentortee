@@ -32,7 +32,10 @@ class VamMentorAdmin {
     add_action('edit_user_profile_update', [$self, 'updateExtraProfileFields']);
 
     // Add user role
-    add_action('init', [$self, 'addUserRole']);    
+    add_action('init', [$self, 'addUserRole']);
+
+    // Add CSV to admin sidebar
+    add_action('admin_menu', [$self, 'add_upload_csv_navigator']);
   }
 
   public function importCss() {
@@ -353,8 +356,8 @@ class VamMentorAdmin {
     update_user_meta($userId, 'company', $_REQUEST['company']);
     update_user_meta($userId, 'title', $_REQUEST['title']);
     update_user_meta($userId, 'phone', $_REQUEST['phone']);
-    update_user_meta($userId, 'topics', $_REQUEST['topics']);
     update_user_meta($userId, 'method_of_contact', $_REQUEST['method_of_contact']);
+    update_user_meta($userId, 'meeting_frequency', $_REQUEST['meeting_frequency']);
     update_user_meta($userId, 'year_of_experience', $_REQUEST['year_of_experience']);
     update_user_meta($userId, 'topics', $_REQUEST['topics']);
     update_user_meta($userId, 'hobbies', $_REQUEST['hobbies']);
@@ -364,5 +367,21 @@ class VamMentorAdmin {
     update_user_meta($userId, 'mentoring_program', $_REQUEST['mentoring_program']);
     update_user_meta($userId, 'career_field', $_REQUEST['career_field']);
     update_user_meta($userId, 'expertise', $_REQUEST['expertise']);
+  }
+
+  public function add_upload_csv_navigator() {
+    add_menu_page(
+      "VamMentorAdmin",
+      "Tạo Mentors bằng CSV",
+      "manage_options",
+      "upload_mentor_csv",
+      [$this, "get_upload_csv_html"],
+      "dashicons-upload",
+      110,
+    );
+  }
+
+  public function get_upload_csv_html() {
+    require_once plugin_dir_path(__FILE__) . '../templates/csv_navigator_button.php';
   }
 }
