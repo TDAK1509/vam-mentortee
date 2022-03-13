@@ -12,26 +12,82 @@ if (isset($_FILES)) {
   if ($tmpName == "") return;
 
   $csvAsArray = array_map('str_getcsv', file($tmpName));
-  var_dump($csvAsArray);
 
   try {
-    createUser();
-    echo "USER created";
+    for($i = 1; $i < count($csvAsArray); $i++) {
+      $row = &$csvAsArray[$i];
+      $isCreated = createUser($row);
+      if($isCreated) echo "Username $row[0] exists.<br>";
+    }
+    echo "Finish creating users.";
   } catch (Exception $e) {
       echo 'Error creating user: ',  $e->getMessage(), "\n";
   }
-
 }
 
-function createUser() {
-  $username = 'admin';
-	$password = 'password';
-	$email_address = 'webmaster@mydomain.com';
+function createUser($userInfo) {
+  $username = $userInfo[0];
+	$password = $userInfo[1];
+	$email= $userInfo[2];
+	$first_name = $userInfo[3];
+	$last_name = $userInfo[4];
+	$gender = $userInfo[5];
+	$company = $userInfo[6];
+	$title = $userInfo[7];
+	$phone = $userInfo[8];
+	$method_of_contact = $userInfo[9];
+	$meeting_frequency = $userInfo[10];
+	$year_of_experience = $userInfo[11];
+	$degree = $userInfo[12];
+	$topics = $userInfo[13];
+	$hobbies = $userInfo[14];
+	$mentee_capacity = $userInfo[15];
+	$mentoring_program = $userInfo[16];
+	$career_field = $userInfo[17];
+	$expertise = $userInfo[18];
 
-	if ( ! username_exists( $username ) ) {
-		$user_id = wp_create_user( $username, $password, $email_address );
-		$user = new WP_User( $user_id );
-		$user->set_role( 'mentor' );
+  $meta_input = array(
+    "first_name" => $first_name,
+    "last_name" => $last_name,
+    "gender" => $gender,
+    "company" => $company,
+    "title" => $title,
+    "phone" => $phone,
+    "method_of_contact" => $method_of_contact,
+    "meeting_frequency" => $meeting_frequency,
+    "year_of_experience" => $year_of_experience,
+    "degree" => $degree,
+    "topics" => $topics,
+    "hobbies" => $hobbies,
+    "mentee_capacity" => $mentee_capacity,
+    "mentoring_program" => $mentoring_program,
+    "career_field" => $career_field,
+    "expertise" => $expertise,
+  );
+
+	if (username_exists($username)) {
+    return false;
+  }
+
+  $userData = array(
+    "user_pass" => $password,
+    "user_login" => $username,
+    "user_email" => $email,
+    "first_name" => $first_name,
+    "last_name" => $last_name,
+    "role" => "mentor",
+    "meta_input" => $meta_input,
+  );
+  
+  $userId = wp_create_user( $username, $password, $email);
+  $user = new WP_User( $userId );
+  $user->set_role( 'mentor' );
+
+  foreach ( $meta_input as $key => $value ) {
+    update_user_meta($userId, $key, $value);
+  }
+
+  return true;
 	}
 }
 ?>
