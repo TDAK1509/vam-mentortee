@@ -17,9 +17,11 @@ if (isset($_FILES)) {
     for($i = 1; $i < count($csvAsArray); $i++) {
       $row = &$csvAsArray[$i];
       $isCreated = createUser($row);
-      if($isCreated) echo "Username $row[0] exists.<br>";
+      if (!$isCreated) {
+        echo "Bỏ qua username <strong>$row[0]</strong> vì nó đã tồn tại.<br>";
+      }
     }
-    echo "Finish creating users.";
+    echo "Tạo users hoàn tất.";
   } catch (Exception $e) {
       echo 'Error creating user: ',  $e->getMessage(), "\n";
   }
@@ -88,6 +90,5 @@ function createUser($userInfo) {
   }
 
   return true;
-	}
 }
 ?>
