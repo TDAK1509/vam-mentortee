@@ -356,8 +356,8 @@ class VamMentorAdmin {
     update_user_meta($userId, 'company', $_REQUEST['company']);
     update_user_meta($userId, 'title', $_REQUEST['title']);
     update_user_meta($userId, 'phone', $_REQUEST['phone']);
-    update_user_meta($userId, 'topics', $_REQUEST['topics']);
     update_user_meta($userId, 'method_of_contact', $_REQUEST['method_of_contact']);
+    update_user_meta($userId, 'meeting_frequency', $_REQUEST['meeting_frequency']);
     update_user_meta($userId, 'year_of_experience', $_REQUEST['year_of_experience']);
     update_user_meta($userId, 'topics', $_REQUEST['topics']);
     update_user_meta($userId, 'hobbies', $_REQUEST['hobbies']);
