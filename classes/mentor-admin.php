@@ -72,17 +72,10 @@ class VamMentorAdmin {
         ' . $this->getRadioFieldHTML("Gender", "gender", $this->getGenderData()) . '
         ' . $this->getTextFieldHTML("Company", "company", $this->getFieldValueFromServer("company")) . '
         ' . $this->getTextFieldHTML("Title", "title", $this->getFieldValueFromServer("title")) . '
-        ' . $this->getTextFieldHTML("Phone", "phone", $this->getFieldValueFromServer("phone")) . '
-        ' . $this->getTextFieldHTML("Method of contact", "method_of_contact", $this->getFieldValueFromServer("method_of_contact")) . '
-        ' . $this->getTextFieldHTML("Meeting frequency", "meeting_frequency", $this->getFieldValueFromServer("meeting_frequency")) . '
         ' . $this->getTextFieldHTML("Year of experience", "year_of_experience", $this->getFieldValueFromServer("year_of_experience")) . '
-        ' . $this->getRadioFieldHTML("Degree", "degree", $this->getDegreeData()) . '
-        ' . $this->getTextFieldHTML("Specific topics you feel comfortable advising about", "topics", $this->getFieldValueFromServer("topics")) . '
-        ' . $this->getTextFieldHTML("Describe the activities, interests, and/or hobbies that are most meaningful to you", "hobbies", $this->getFieldValueFromServer("hobbies")) . '
-        ' . $this->getTextFieldHTML("Mentee capacity", "mentee_capacity", $this->getFieldValueFromServer("mentee_capacity")) . '
         ' . $this->getSelectFieldHTML("Mentoring program", "mentoring_program") . '
         ' . $this->getSelectFieldHTML("Career field", "career_field") . '
-        ' . $this->getSelectFieldHTML("Expertise", "expertise") . '
+        ' . $this->getSelectFieldHTML("Expertised", "expertise") . '
       </tbody>
     </table>';
   }
@@ -274,50 +267,6 @@ class VamMentorAdmin {
     return $data;
   }
 
-  private function getDegreeData() {
-    $degree = $this->getFieldValueFromServer("degree");
-    $degreeList = ["Cao đẳng", "Đại học", "Thạc sĩ", "Tiến sĩ"];
-
-    $data = [
-      [
-        "id" => "degree-1",
-        "value" => "Cao đẳng",
-        "label" => "Cao đẳng",
-        "checked" => $degree === $degreeList[0]
-      ],
-
-      [
-        "id" => "degree-2",
-        "value" => "Đại học",
-        "label" => "Đại học",
-        "checked" => $degree === $degreeList[1]
-      ],
-
-      [
-        "id" => "degree-3",
-        "value" => "Thạc sĩ",
-        "label" => "Thạc sĩ",
-        "checked" => $degree === $degreeList[2]
-      ],
-
-      [
-        "id" => "degree-4",
-        "value" => "Tiến sĩ",
-        "label" => "Tiến sĩ",
-        "checked" => $degree === $degreeList[3]
-      ],
-
-      [
-        "id" => "degree_other",
-        "value" => $degree,
-        "label" => "Khác",
-        "checked" => !in_array($degree, $degreeList)
-      ],
-    ];
-
-    return $data; 
-  }
-
   private function getFieldValueFromServer($fieldName) {
     $userId = get_current_user_id();
 
@@ -350,18 +299,11 @@ class VamMentorAdmin {
 
     // Radio fields
     update_user_meta($userId, 'gender', $_REQUEST['gender'] !== "" ? $_REQUEST['gender'] : $_REQUEST['gender_other']);
-    update_user_meta($userId, 'degree', $_REQUEST['degree'] !== "" ? $_REQUEST['degree'] : $_REQUEST['degree_other']);
 
     // Text fields
     update_user_meta($userId, 'company', $_REQUEST['company']);
     update_user_meta($userId, 'title', $_REQUEST['title']);
-    update_user_meta($userId, 'phone', $_REQUEST['phone']);
-    update_user_meta($userId, 'method_of_contact', $_REQUEST['method_of_contact']);
-    update_user_meta($userId, 'meeting_frequency', $_REQUEST['meeting_frequency']);
     update_user_meta($userId, 'year_of_experience', $_REQUEST['year_of_experience']);
-    update_user_meta($userId, 'topics', $_REQUEST['topics']);
-    update_user_meta($userId, 'hobbies', $_REQUEST['hobbies']);
-    update_user_meta($userId, 'mentee_capacity', $_REQUEST['mentee_capacity']);
 
     // Select fields
     update_user_meta($userId, 'mentoring_program', $_REQUEST['mentoring_program']);

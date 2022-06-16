@@ -53,14 +53,10 @@ class VamMentorDetails {
                     "company" => $userMetaData["company"][0],
                     "title" => $userMetaData["title"][0],
                     "email" => $mentor->user_email,
-                    "phone" => $userMetaData["phone"][0],
                     "biography" => $userMetaData["description"][0],
                     "year_of_experience" => $userMetaData["year_of_experience"][0],
-                    "degree" => $userMetaData["degree"][0],
                     "career_field" => $userMetaData["career_field"][0],
                     "expertise" => $userMetaData["expertise"][0],
-                    "topics" => $userMetaData["topics"][0],
-                    "hobbies" => $userMetaData["hobbies"][0],
                     "mentoring_program" => $userMetaData["mentoring_program"][0],
                 ];
 
@@ -91,14 +87,13 @@ class VamMentorDetails {
 
     private function getBottomLeftBlockHTML() {
         $userInfo = $this->userInfo;
-        $emailPhoneHtml = "";
+        $emailHtml = "";
         
 
         if ($this->userIsAdmin()) {
             $dividerHtml = "<div class='mentor-details__line'></div>";
             $emailHtml = $this->getContactInfoRow($this->getEmailIcon(), $userInfo->email);
-            $phoneHtml = $this->getContactInfoRow($this->getPhoneIcon(), $userInfo->phone);
-            $emailPhoneHtml = $dividerHtml . $emailHtml . $phoneHtml;
+            $emailHtml = $dividerHtml . $emailHtml;
         }
 
         $html = 
@@ -106,7 +101,7 @@ class VamMentorDetails {
             <h5 class='mentor-details__heading'>$userInfo->name</h5>
             <p>$userInfo->title</p>
             <p><strong>$userInfo->company</strong></p>
-            $emailPhoneHtml
+            $emailHtml
         </div>";
         return $html;
     }
@@ -128,11 +123,6 @@ class VamMentorDetails {
         return "<img src='$iconUrl' class='mentor-details__icon' />";
     }
 
-    private function getPhoneIcon() {
-        $iconUrl = DIR_PLUGIN . "/assets/svg/mobile.svg";
-        return "<img src='$iconUrl' class='mentor-details__icon' />";
-    }
-
     private function getRightBlockHTML() {
         $userInfo = $this->userInfo;
 
@@ -140,11 +130,8 @@ class VamMentorDetails {
         "<div class='mentor-details__right'>
             " . $this->getRightBlockRowHTML("Tiểu sử", $userInfo->biography) . "
             " . $this->getRightBlockRowHTML("Số năm kinh nghiệm", $userInfo->year_of_experience) . "
-            " . $this->getRightBlockRowHTML("Trình độ học vấn", $userInfo->degree) . "
             " . $this->getRightBlockRowHTML("Lĩnh vực nghề nghiệp", $userInfo->career_field) . "
             " . $this->getRightBlockRowHTML("Chuyên môn", $userInfo->expertise) . "
-            " . $this->getRightBlockRowHTML("Chủ đề chia sẻ", $userInfo->topics) . "
-            " . $this->getRightBlockRowHTML("Sở thích", $userInfo->hobbies) . "
             " . $this->getRightBlockRowHTML("Chương trình mentoring", $userInfo->mentoring_program) . "
         </div>";
 
