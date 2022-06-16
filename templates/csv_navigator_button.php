@@ -40,13 +40,13 @@ function createUser($userInfo) {
 	$gender = $userInfo[5];
 	$company = $userInfo[6];
 	$title = $userInfo[7];
-	$year_of_experience = $userInfo[11];
-	$workplace_location = $userInfo[11];
-	$soft_skills = $userInfo[11];
+	$year_of_experience = $userInfo[8];
+	$workplace_location = $userInfo[9];
+	$soft_skills = $userInfo[10];
 	$subjects_cross_mentoring = $userInfo[11];
-	$mentoring_program = $userInfo[16];
-	$career_field = $userInfo[17];
-	$expertise = $userInfo[18];
+	$mentoring_program = $userInfo[12];
+	$career_field = $userInfo[13];
+	$expertise = $userInfo[14];
 
   $meta_input = array(
     "first_name" => $first_name,
