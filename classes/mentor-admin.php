@@ -73,6 +73,9 @@ class VamMentorAdmin {
         ' . $this->getTextFieldHTML("Company", "company", $this->getFieldValueFromServer("company")) . '
         ' . $this->getTextFieldHTML("Title", "title", $this->getFieldValueFromServer("title")) . '
         ' . $this->getTextFieldHTML("Year of experience", "year_of_experience", $this->getFieldValueFromServer("year_of_experience")) . '
+        ' . $this->getTextFieldHTML("Workplace location", "workplace_location", $this->getFieldValueFromServer("workplace_location")) . '
+        ' . $this->getTextFieldHTML("Soft skills", "soft_skills", $this->getFieldValueFromServer("soft_skills")) . '
+        ' . $this->getTextFieldHTML("Subjects for cross-mentoring", "subjects_cross_mentoring", $this->getFieldValueFromServer("subjects_cross_mentoring")) . '
         ' . $this->getSelectFieldHTML("Mentoring program", "mentoring_program") . '
         ' . $this->getSelectFieldHTML("Career field", "career_field") . '
         ' . $this->getSelectFieldHTML("Expertised", "expertise") . '
@@ -304,6 +307,9 @@ class VamMentorAdmin {
     update_user_meta($userId, 'company', $_REQUEST['company']);
     update_user_meta($userId, 'title', $_REQUEST['title']);
     update_user_meta($userId, 'year_of_experience', $_REQUEST['year_of_experience']);
+    update_user_meta($userId, 'workplace_location', $_REQUEST['workplace_location']);
+    update_user_meta($userId, 'soft_skills', $_REQUEST['soft_skills']);
+    update_user_meta($userId, 'subjects_cross_mentoring', $_REQUEST['subjects_cross_mentoring']);
 
     // Select fields
     update_user_meta($userId, 'mentoring_program', $_REQUEST['mentoring_program']);

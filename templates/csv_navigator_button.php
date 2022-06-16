@@ -41,6 +41,9 @@ function createUser($userInfo) {
 	$company = $userInfo[6];
 	$title = $userInfo[7];
 	$year_of_experience = $userInfo[11];
+	$workplace_location = $userInfo[11];
+	$soft_skills = $userInfo[11];
+	$subjects_cross_mentoring = $userInfo[11];
 	$mentoring_program = $userInfo[16];
 	$career_field = $userInfo[17];
 	$expertise = $userInfo[18];
@@ -52,6 +55,9 @@ function createUser($userInfo) {
     "company" => $company,
     "title" => $title,
     "year_of_experience" => $year_of_experience,
+    "workplace_location" => $workplace_location,
+    "soft_skills" => $soft_skills,
+    "subjects_cross_mentoring" => $subjects_cross_mentoring,
     "mentoring_program" => $mentoring_program,
     "career_field" => $career_field,
     "expertise" => $expertise,
