@@ -1,2 +1,2 @@
-username,password,email,firstname,lastname,gender,company,title,phone,method_of_contact,meeting_frequency,year_of_experience,degree,topics,hobbies,mentee_capacity,mentoring_program,career_field,expertise
-myusername,abcd1234,test@gmail.com,Jackson,Michael,Nam,Công ty X,Thái giám,912345678,method of contact,meeting frequency,1,Cao đẳng,topic,hobby,1,UEH Mentoring,Architecture and Engineering,Landscape architecture
+username,password,email,firstname,lastname,gender,company,title,year_of_experience,workplace_location,soft_skills,subjects_cross_mentoring,mentoring_program,career_field,expertise
+myusername,abcd1234,test@gmail.com,Jackson,Michael,Nam,Công ty X,Thái giám,1,Workplace location,My soft skill,subject Cross mentoring,UEH Mentoring,Architecture and Engineering,Landscape architecture
