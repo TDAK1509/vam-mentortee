@@ -76,7 +76,7 @@ class VamMentorAdmin {
         ' . $this->getTextFieldHTML("Workplace location", "workplace_location", $this->getFieldValueFromServer("workplace_location")) . '
         ' . $this->getTextFieldHTML("Soft skills", "soft_skills", $this->getFieldValueFromServer("soft_skills")) . '
         ' . $this->getTextFieldHTML("Subjects for cross-mentoring", "subjects_cross_mentoring", $this->getFieldValueFromServer("subjects_cross_mentoring")) . '
-        ' . $this->getSelectFieldHTML("Mentoring program", "mentoring_program") . '
+        ' . $this->getMultipleSelectFieldHTML("Mentoring program", "mentoring_program") . '
         ' . $this->getSelectFieldHTML("Career field", "career_field") . '
         ' . $this->getSelectFieldHTML("Expertised", "expertise") . '
       </tbody>
@@ -156,6 +156,20 @@ class VamMentorAdmin {
     </tr>";
   }
 
+  private function getMultipleSelectFieldHTML($label, $name) {
+    $optionsHTML = $this->getSelectOptionsHTMLByFieldName($name);
+
+    return "
+    <tr class='user-url-wrap'>
+      <th><label>$label</label></th>
+      <td>
+        <select class='mentor-admin__select-field' name='$name" . "[]' id='$name' multiple>
+          $optionsHTML
+        </select>
+      </td>
+    </tr>";
+  }
+
   private function getSelectOptionsHTMLByFieldName($name) {
     switch($name) {
       case "mentoring_program":
@@ -170,13 +184,12 @@ class VamMentorAdmin {
   }
 
   private function getOptionsHTMLMentoringProgram() {
-    $selectedValue = $this->getFieldValueFromServer("mentoring_program");
+    $selectedValues = explode(",", $this->getFieldValueFromServer("mentoring_program"));
     $options = ["UEH Mentoring", "BK Mentoring", "FTU2 Mentoring", "HN Mentoring"];
-
-    $html = "<option value=''>Click to select</option>";
+    $html = "";
 
     foreach ($options as $option) {
-      if ($option === $selectedValue) {
+      if (in_array($option, $selectedValues)) {
         $html .= "<option selected>$option</option>";
       } else {
         $html .= "<option>$option</option>";
@@ -312,7 +325,7 @@ class VamMentorAdmin {
     update_user_meta($userId, 'subjects_cross_mentoring', $_REQUEST['subjects_cross_mentoring']);
 
     // Select fields
-    update_user_meta($userId, 'mentoring_program', $_REQUEST['mentoring_program']);
+    update_user_meta($userId, 'mentoring_program', implode(",", $_REQUEST['mentoring_program']));
     update_user_meta($userId, 'career_field', $_REQUEST['career_field']);
     update_user_meta($userId, 'expertise', $_REQUEST['expertise']);
   }
