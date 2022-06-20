@@ -1,2 +1,3 @@
 username,password,email,firstname,lastname,gender,company,title,year_of_experience,workplace_location,soft_skills,subjects_cross_mentoring,mentoring_program,career_field,expertise
 myusername,abcd1234,test@gmail.com,Jackson,Michael,Nam,Công ty X,Thái giám,1,Workplace location,My soft skill,subject Cross mentoring,UEH Mentoring,Architecture and Engineering,Landscape architecture
+user_with_multiple_mentoring_program,abcd1234,test2@gmail.com,Ryan,Reynolds,Nam,Công ty Y,King of Sarcasm,1,Hollywood,Laugh,Deadpool,"UEH Mentoring,HN Mentoring",Architecture and Engineering,Landscape architecture
