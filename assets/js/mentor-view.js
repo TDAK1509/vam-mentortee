@@ -23,9 +23,11 @@ function filterMentors() {
   let filteredMentors = phpMentors;
 
   if (selectedProgram) {
-    filteredMentors = filteredMentors.filter(
-      mentor => mentor.mentoring_program === selectedProgram
-    );
+    filteredMentors = filteredMentors.filter(mentor => {
+      return mentor.mentoring_program
+        ? mentor.mentoring_program.includes(selectedProgram)
+        : false;
+    });
   }
 
   if (selectedExpertise) {
