@@ -50,8 +50,12 @@ function getMentorListHtml(mentors) {
 }
 
 function getMentorHtml(mentor) {
+  const mentorDetailsPageUrl = window.location.href.replace(
+    "/mentor-list",
+    "/mentor-details"
+  );
   return `<li class='mentor-view__list-item'>
-  <a href='$mentorDetailsPageWithUserId'>
+  <a href='${mentorDetailsPageUrl}?id=${mentor.id}'>
       <img class='mentor-list-item__avatar' src='${mentor.avatar}' />
   </a>
   <p class='mentor-list-item__name'>${mentor.display_name}</p>
