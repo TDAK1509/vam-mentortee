@@ -115,7 +115,7 @@ class VamMentorDetails {
         return 
         "<p class='mentor-details__contact-info'>
             {$icon}
-            <span>: {$value}</span>
+            <span> {$value}</span>
         </p>";
     }    
 
