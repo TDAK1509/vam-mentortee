@@ -58,6 +58,10 @@
   align-items: center;
 }
 
+.mentor-details__contact-info span {
+  margin-left: 0.5em;
+}
+
 .mentor-details__icon {
   width: 20px;
   height: 20px;
