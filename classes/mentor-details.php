@@ -58,6 +58,7 @@ class VamMentorDetails {
                     "career_field" => $userMetaData["career_field"][0],
                     "expertise" => $userMetaData["expertise"][0],
                     "mentoring_program" => $userMetaData["mentoring_program"][0],
+                    "soft_skills" => $userMetaData["soft_skills"][0],
                 ];
 
                 return (object) $userInfo;
@@ -130,6 +131,7 @@ class VamMentorDetails {
         "<div class='mentor-details__right'>
             " . $this->getRightBlockRowHTML("Tiểu sử", $userInfo->biography) . "
             " . $this->getRightBlockRowHTML("Số năm kinh nghiệm", $userInfo->year_of_experience) . "
+            " . $this->getRightBlockRowHTML("Kĩ năng mềm", $userInfo->soft_skills) . "
             " . $this->getRightBlockRowHTML("Lĩnh vực nghề nghiệp", $userInfo->career_field) . "
             " . $this->getRightBlockRowHTML("Chuyên môn", $userInfo->expertise) . "
             " . $this->getRightBlockRowHTML("Chương trình mentoring", $userInfo->mentoring_program) . "
