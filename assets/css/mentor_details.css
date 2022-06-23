@@ -2,7 +2,7 @@
   display: grid;
   margin: auto !important;
   max-width: none !important;
-  text-align: left;
+  text-align: justify;
   font-size: 12pt;
   font-family: Arial;
   column-gap: 30px;
@@ -13,6 +13,7 @@
     ". right";
   grid-template-columns: auto 1fr;
   row-gap: 10px;
+  padding: 2em;
 }
 
 .mentor-details p {
